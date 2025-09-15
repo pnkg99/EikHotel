@@ -146,13 +146,71 @@ class NFCConnectionManager:
         return self.connect()
 
 
+
+# Mock klasa za testiranje bez fizičkog čitača
+class MockNFCReader(NFCReader):
+    """Mock implementacija za testiranje"""
+    
+    def __init__(self, callback=None):
+        self.callback = callback
+        self.is_running = False
+        self.read_timer = QTimer()
+        self.read_timer.timeout.connect(self._simulate_card_read)
+        self.last_uid = "14C12A99"
+        
+    def _initialize_reader(self):
+        #print("Mock NFC Reader inicijalizovan")
+        return True
+    
+    def start(self):
+        self.is_running = True
+        self.read_timer.start(3000)  # Simuliraj kartu svake 3 sekunde
+        #print("Mock NFC čitač pokrenut")
+    
+    def stop(self):
+        self.is_running = False
+        self.read_timer.stop()
+        #print("Mock NFC čitač zaustavljen")
+    
+    def _simulate_card_read(self):
+        """Simulira čitanje kartice"""
+        if not self.is_running:
+            return
+            
+        # Simuliraj random UID
+        #import random
+        #uid_hex = f"{''.join([f'{random.randint(0,255):02X}' for _ in range(4)])}"
+        uid_hex = "63627ECE"
+        
+        print(f"Mock kartica: {uid_hex}")
+        
+        if self.callback:
+            self.callback()
+    
+    def write_card_number_block(self, uid: bytes, card_number: str, block_number: int = 8):
+        print(f"Mock: Upisivanje card_number '{card_number}' u blok {block_number}")
+        return True
+    
+    def write_cvc_code_block(self, uid: bytes, cvc_code: str, pin: str, block_number: int = 9):
+        print(f"Mock: Upisivanje CVC '{cvc_code}' u blok {block_number}")
+        return True
+    
+    def read_card_number_block(self, block_number: int = 8):
+        print(f"Mock: Čitanje card_number iz bloka {block_number}")
+        return "1337"
+    
+    def read_cvc_code_block(self, pin: str, block_number: int = 9):
+        print(f"Mock: Čitanje CVC iz bloka {block_number}")
+        return "1337"
+
 class NFCReader:
     """
     Poboljšan NFC čitač preko PN532 (I2C) sa naprednim error handling-om i debug sistemom.
     """
     
-    def __init__(self, root, on_card_read: Callable[[bytes, str], None], 
-                 debug_level: DebugLevel = DebugLevel.INFO):
+    def __init__(self, root=None, on_card_read: Callable[[bytes, str], None] = None, 
+                debug_level: DebugLevel = DebugLevel.INFO):
+
         """
         :param root: Widget koji pokreće/zaustavlja čitanje
         :param on_card_read: Callback funkcija sa potpisom on_card_read(uid, uid_hex)
@@ -477,63 +535,6 @@ class NFCReader:
 
 
 
-# Mock klasa za testiranje bez fizičkog čitača
-class MockNFCReader(NFCReader):
-    """Mock implementacija za testiranje"""
-    
-    def __init__(self, callback=None):
-        self.callback = callback
-        self.is_running = False
-        self.read_timer = QTimer()
-        self.read_timer.timeout.connect(self._simulate_card_read)
-        self.last_uid = "14C12A99"
-        
-    def _initialize_reader(self):
-        #print("Mock NFC Reader inicijalizovan")
-        return True
-    
-    def start(self):
-        self.is_running = True
-        self.read_timer.start(3000)  # Simuliraj kartu svake 3 sekunde
-        #print("Mock NFC čitač pokrenut")
-    
-    def stop(self):
-        self.is_running = False
-        self.read_timer.stop()
-        #print("Mock NFC čitač zaustavljen")
-    
-    def _simulate_card_read(self):
-        """Simulira čitanje kartice"""
-        if not self.is_running:
-            return
-            
-        # Simuliraj random UID
-        #import random
-        #uid_hex = f"{''.join([f'{random.randint(0,255):02X}' for _ in range(4)])}"
-        uid_hex = "63627ECE"
-        
-        print(f"Mock kartica: {uid_hex}")
-        
-        if self.callback:
-            self.callback()
-    
-    def write_card_number_block(self, uid: bytes, card_number: str, block_number: int = 8):
-        print(f"Mock: Upisivanje card_number '{card_number}' u blok {block_number}")
-        return True
-    
-    def write_cvc_code_block(self, uid: bytes, cvc_code: str, pin: str, block_number: int = 9):
-        print(f"Mock: Upisivanje CVC '{cvc_code}' u blok {block_number}")
-        return True
-    
-    def read_card_number_block(self, block_number: int = 8):
-        print(f"Mock: Čitanje card_number iz bloka {block_number}")
-        return "1337"
-    
-    def read_cvc_code_block(self, pin: str, block_number: int = 9):
-        print(f"Mock: Čitanje CVC iz bloka {block_number}")
-        return "1337"
-
-
 def create_nfc_reader(callback=None, force_mock: bool = False):
     """Factory funkcija za kreiranje NFC čitača.
     Ako smo na Windows‑u, ili je eksplicitno zatražen mock, vraća MockNFCReader.
@@ -542,4 +543,5 @@ def create_nfc_reader(callback=None, force_mock: bool = False):
     if force_mock or is_windows:
         return MockNFCReader(callback)
     else:
-        return NFCReader(callback)
+        return NFCReader(root=None, on_card_read=callback)
+
