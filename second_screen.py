@@ -8,7 +8,7 @@ from botbar import BottomBar
 from color import COLORS  # uvoz boja
 from services.web import register_guest 
 from virtual_keyboard import KeyboardLineEdit  # Nova import
-
+import random
 label_1_style=f"""    
 font-family: Inter;
 font-weight: 600;
@@ -131,11 +131,15 @@ class SecondScreen(DefaultScreen):
         # Sakrij tastaturu pre submit-a
         if self.current_keyboard_input:
             self.current_keyboard_input.hide_keyboard()
-
-        register = register_guest(room_number, name, self.parent_window.screen_manager.uid, self.parent_window.screen_manager.number, self.parent_window.screen_manager.cvc)
+            
+        randint = random.randint(1, 1000000000)
+        self.parent_window.screen_manager = randint
+        register = register_guest(room_number, name, self.parent_window.screen_manager.uid, randint, self.parent_window.screen_manager.cvc)
         if register :            
             # Prikaz custom modala
             modal = CustomModal("Uspešno ste dodali gosta".upper(), "notification", "success")
+            #    def write_block(self, uid: bytes, block: int, data: str) -> bool:
+            self.parent_window.screen_manager.nfc_reader.write_block(self.parent_window.screen_manager.uid, 6, randint)
             modal.show()
             self.parent_window.screen_manager.show_screen("home")
         else : 
