@@ -63,8 +63,11 @@ class SimpleNFCReader:
         while self.is_running:
             try:
                 uid = self.pn532.read_passive_target(timeout=0.1)
-                
+    # Ako je bytearray, pretvori u bytes
+
                 if uid:
+                    if isinstance(uid, bytearray):
+                        uid = bytes(uid)
                     uid_hex = ''.join(f"{b:02X}" for b in uid)
                     
                     # Pozovi callback samo za nove kartice
