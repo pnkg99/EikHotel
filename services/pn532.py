@@ -302,10 +302,7 @@ class NFCReader:
         """Čita podatke iz datog MIFARE bloka sa error handling-om"""
         try:
             self.debugger.log(DebugLevel.DEBUG, f"Čitam podatke iz bloka {block}")
-            
-            # Autentifikacija
-            if not self._authenticate_block(uid, block):
-                return None
+
             
             # Čitanje
             data = self.connection_manager.pn532.mifare_classic_read_block(block)
@@ -323,12 +320,9 @@ class NFCReader:
             self.debugger.log(DebugLevel.ERROR, f"Greška pri čitanju bloka {block}", e)
             return None
 
-        def write_block(self, uid: bytes, data: str) -> bool:
-            """Upisuje string u blok 6 (do 16 bajtova)"""
+    def write_block(self, data: str):
+        """Upisuje string u blok 6 (do 16 bajtova)"""
         try:
-            if not self._authenticate(uid):
-                self.log("Upis: autentifikacija neuspešna")
-                return False
 
             block_data = list(data.encode('utf-8'))[:16]
             block_data += [0x00] * (16 - len(block_data))  # padding do 16
@@ -342,9 +336,6 @@ class NFCReader:
     def read_block_simple(self, uid: bytes):
         """Čita string iz bloka 6"""
         try:
-            if not self._authenticate(uid):
-                self.log("Čitanje: autentifikacija neuspešna")
-                return ""
             data = self.pn532.mifare_classic_read_block(self.block)
             return ''.join(chr(b) for b in data if 32 <= b <= 126).rstrip('\x00')
         except Exception as e:
