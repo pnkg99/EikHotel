@@ -135,7 +135,7 @@ class SecondScreen(DefaultScreen):
         randint = random.randint(1, 1000000000)
         self.parent_window.screen_manager.token = randint
         print(self.parent_window.screen_manager.uid, 6, randint)
-        out = self.parent_window.screen_manager.nfc_reader.write_block(self.parent_window.screen_manager.uid, 6, randint)
+        out = self.parent_window.screen_manager.nfc_reader.write_block(self.parent_window.screen_manager.uid, 6, str(randint))
         print(out)
         return
         register = register_guest(room_number, name, self.parent_window.screen_manager.uid, randint, self.parent_window.screen_manager.cvc)
