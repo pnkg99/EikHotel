@@ -159,14 +159,7 @@ class SimpleNFCReader:
             self.logger.error(f"Greška pri čitanju bloka {block}: {e}")
             return None
     
-    def write_block(self, uid: bytes, block: int, data: str) -> bool:
-        """
-        Upisuje podatke u blok
-        :param uid: UID kartice
-        :param block: Broj bloka
-        :param data: String podataka (max 16 karaktera)
-        :return: True ako je upis uspešan
-        """
+    def write_block(self, uid: bytes, block: int, data: str):
         try:
             # Autentifikuj blok
             if not self.authenticate_block(uid, block):
