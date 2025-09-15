@@ -28,10 +28,19 @@ def get_info():
 
 def register_guest( room_number, name, uuid, card_number, cvc_code):
     url=f"{BASE_URL}nfc-card/activate"
+    import uuid as uuid_module
+
+    # Ako uuid dolazi kao bytes
+    if isinstance(uuid, (bytes, bytearray)):
+        uuid_str = ''.join(f"{b:02x}" for b in uuid)  # heks string
+    elif isinstance(uuid, uuid_module.UUID):
+        uuid_str = str(uuid)
+    else:
+        uuid_str = str(uuid) 
     payload = {
     "fullname" : name,
     "location" : room_number,
-    "uuid" : uuid,
+    "uuid" : uuid_str,
     "card_number" : card_number,
     "cvc_code" : cvc_code
     }
