@@ -105,7 +105,7 @@ class ThirdScreen(DefaultScreen):
 
 
     def finish_decoding(self):
-        deactivate_nfc(self.parent_window.screen_manager.number,self.parent_window.screen_manager.cvc)
+        deactivate_nfc(self.parent_window.screen_manager.token,self.parent_window.screen_manager.cvc)
         modal = CustomModal(message="Kartica Dekodirana")
         modal.show()
         self.parent_window.screen_manager.show_screen("home")
