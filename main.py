@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QShortcut
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap, QCursor
+from PyQt5.QtGui import QPixmap, QCursor, QKeySequence 
 from screen import ScreenManager
 from services.web import get_info
 
@@ -11,10 +11,14 @@ class MainWindow(QMainWindow):
         self.hotel_info =  get_info()
         
         self.setWindowTitle("Eik Hotel")
-
-        # Shortcut za ESC izlaz
-        esc_shortcut = QShortcut(Qt.Key_Escape, self)
-        esc_shortcut.activated.connect(self.close)
+        self.showFullScreen()
+        
+        
+        def keyPressEvent(self, event):
+            if event.key() == Qt.Key_Escape:
+                QApplication.quit()  # zatvara celu aplikaciju
+            else:
+                super().keyPressEvent(event)
 
         # Dimenzije ekrana
         screen_geometry = QApplication.primaryScreen().geometry()
