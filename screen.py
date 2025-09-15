@@ -28,7 +28,7 @@ class NFCPollingThread(QThread):
                     
                     # Emituj signal samo za nove kartice
                     if self.last_uid != uid_hex:
-                        self.card_detected.emit(uid)
+                        self.card_detected.emit(bytes(uid_hex))
                         self.last_uid = uid_hex
                 else:
                     # Resetuj UID ako nema kartice
