@@ -33,7 +33,7 @@ class ScreenManager(QStackedWidget):
             if self.reg_car_number and self.parking_space : self.parking_allocated = True
             print(self.parking_allocated)
           
-    def _handle_read_card(self, uid, uuid):
+    def _handle_read_card(self, uid):
         self.uid = uid
         self.token = self.nfc_reader.read_block_simple(uid)
 

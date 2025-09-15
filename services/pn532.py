@@ -150,7 +150,7 @@ class NFCReader:
     Poboljšan NFC čitač preko PN532 (I2C) sa naprednim error handling-om i debug sistemom.
     """
     
-    def __init__(self, root=None, on_card_read: Callable[[bytes, str], None] = None, 
+    def __init__(self, root=None, on_card_read: Callable[[bytes], None] = None, 
                 debug_level: DebugLevel = DebugLevel.INFO):
 
         """
@@ -268,10 +268,10 @@ class NFCReader:
         finally:
             self._schedule_next_check()
     
-    def _safe_callback(self, uid: bytes, uid_hex: str):
+    def _safe_callback(self, uid: bytes):
         """Bezbedni poziv callback funkcije"""
         try:
-            self.on_card_read(uid, uid_hex)
+            self.on_card_read(uid)
         except Exception as e:
             self.debugger.log(DebugLevel.ERROR, f"Greška u callback funkciji: {str(e)}", e)
     
@@ -326,11 +326,11 @@ class NFCReader:
 
             block_data = list(data.encode('utf-8'))[:16]
             block_data += [0x00] * (16 - len(block_data))  # padding do 16
-            self.pn532.mifare_classic_write_block(self.block, block_data)
-            self.log(f"Upisano u blok {self.block}: {data}")
+            self.connection_manager.pn532.mifare_classic_write_block(self.block, block_data)
+            self.debugger.log(f"Upisano u blok {self.block}: {data}")
             return True
         except Exception as e:
-            self.log(f"Greška pri upisu: {e}")
+            self.debugger.log(f"Greška pri upisu: {e}")
             return False
 
     def read_block_simple(self, uid: bytes):
