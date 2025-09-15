@@ -306,7 +306,8 @@ class NFCReader:
             
             # Čitanje
             data = self.connection_manager.pn532.mifare_classic_read_block(block)
-            if not data or len(data) != 16:
+            print("data: hehe ", data)
+            if not data:
                 self.debugger.log(DebugLevel.ERROR, f"Čitanje bloka {block} neuspešno ili pogrešna dužina")
                 return None
             
