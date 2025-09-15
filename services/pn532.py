@@ -272,7 +272,7 @@ class NFCReader:
     def _safe_callback(self, uid: bytes, uid_hex: str):
         """Bezbedni poziv callback funkcije"""
         try:
-            self.on_card_read()
+            self.on_card_read(uid, uid_hex)
         except Exception as e:
             self.debugger.log(DebugLevel.ERROR, f"Greška u callback funkciji: {str(e)}", e)
     
@@ -374,6 +374,32 @@ class NFCReader:
             self.debugger.log(DebugLevel.ERROR, f"Greška pri čitanju card_number", e)
             return None
     
+    
+    def read_block(self, uid: bytes, block: int):
+        """Čita podatke iz datog MIFARE bloka sa error handling-om"""
+        try:
+            self.debugger.log(DebugLevel.DEBUG, f"Čitam podatke iz bloka {block}")
+            
+            # Autentifikacija
+            if not self._authenticate_block(uid, block):
+                return None
+            
+            # Čitanje
+            data = self.connection_manager.pn532.mifare_classic_read_block(block)
+            if not data or len(data) != 16:
+                self.debugger.log(DebugLevel.ERROR, f"Čitanje bloka {block} neuspešno ili pogrešna dužina")
+                return None
+            
+            # Dekodiranje
+            result = self._decode_block_data(data)
+            self.debugger.log(DebugLevel.INFO, f"Blok {block} uspešno pročitan")
+            self.debugger.increment_stat('reads')
+            return result
+            
+        except Exception as e:
+            self.debugger.log(DebugLevel.ERROR, f"Greška pri čitanju bloka {block}", e)
+            return None
+
     def read_cvc_code_block(self, uid: bytes, pin: str) :
         """Čita i dešifruje cvc_code iz bloka sa error handling-om"""
         try:

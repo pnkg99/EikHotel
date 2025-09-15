@@ -35,7 +35,7 @@ class ScreenManager(QStackedWidget):
           
     def _handle_read_card(self):
         self.uid = self.nfc_reader.last_uid
-        self.number = self.nfc_reader.read_card_number_block()
+        self.number = self.nfc_reader.read_block(self.uid, 8)
         self.cvc = self.nfc_reader.read_cvc_code_block(self.pin)
 
         if self.number and self.cvc:
