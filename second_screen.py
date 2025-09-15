@@ -133,7 +133,7 @@ class SecondScreen(DefaultScreen):
             self.current_keyboard_input.hide_keyboard()
             
         randint = random.randint(1, 1000000000)
-        self.parent_window.screen_manager = randint
+        self.parent_window.screen_manager.token = randint
         register = register_guest(room_number, name, self.parent_window.screen_manager.uid, randint, self.parent_window.screen_manager.cvc)
         if register :            
             # Prikaz custom modala
