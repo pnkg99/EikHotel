@@ -160,12 +160,7 @@ class SimpleNFCReader:
             return None
     
     def write_block(self, uid: bytes, block: int, data: str):
-        try:
-            # Autentifikuj blok
-            if not self.authenticate_block(uid, block):
-                self.logger.error(f"Autentifikacija bloka {block} neuspešna")
-                return False
-            
+        try:          
             # Pripremi podatke (16 bajtova sa padding)
             block_data = list(data.encode('utf-8'))[:16]
             block_data += [0x00] * (16 - len(block_data))
