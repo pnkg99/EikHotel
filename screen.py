@@ -1,11 +1,11 @@
 from PyQt5.QtWidgets import QStackedWidget
-from services.pn532 import create_nfc_reader
+from services.pn532 import SimpleNFCReader
 from services.web import read_nfc_card, get_card_history, enter_restaurant, enter_gym
 class ScreenManager(QStackedWidget):
     def __init__(self):
         super().__init__()
         self.screens = {}
-        self.nfc_reader = create_nfc_reader(self._handle_read_card)
+        self.nfc_reader = SimpleNFCReader(self._handle_read_card)
         self.pin = "123456"
         self.number = None
         self.cvc = None
