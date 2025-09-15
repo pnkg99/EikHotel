@@ -1,0 +1,3162 @@
+{
+  "('unutrasnji', 1, 'A', 'A1')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A1",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'A', 'A2')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A2",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'A', 'A3')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'A', 'A4')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A4",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 36"
+    },
+    "license_plate": "KG 709 MT",
+    "room_number": "770",
+    "timestamp": "2025-08-17T16:15:54.813343"
+  },
+  "('unutrasnji', 1, 'A', 'A5')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A5",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'A', 'A6')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A6",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 79"
+    },
+    "license_plate": "KG 435 XJ",
+    "room_number": "253",
+    "timestamp": "2025-08-17T16:15:54.813856"
+  },
+  "('unutrasnji', 1, 'A', 'A7')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A7",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 50"
+    },
+    "license_plate": "KG 836 MO",
+    "room_number": "393",
+    "timestamp": "2025-08-17T16:15:54.813856"
+  },
+  "('unutrasnji', 1, 'A', 'A8')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A8",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'A', 'A9')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A9",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'A', 'A10')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A10",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'A', 'A11')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A11",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 28"
+    },
+    "license_plate": "KG 548 YD",
+    "room_number": "265",
+    "timestamp": "2025-08-17T16:15:54.813856"
+  },
+  "('unutrasnji', 1, 'A', 'A12')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A12",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'A', 'A13')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A13",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'A', 'A14')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A14",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'A', 'A15')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A15",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 8"
+    },
+    "license_plate": "KG 521 XP",
+    "room_number": "638",
+    "timestamp": "2025-08-17T16:15:54.813856"
+  },
+  "('unutrasnji', 1, 'A', 'A16')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A16",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 77"
+    },
+    "license_plate": "KG 976 UF",
+    "room_number": "548",
+    "timestamp": "2025-08-17T16:15:54.813856"
+  },
+  "('unutrasnji', 1, 'B', 'B1')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B1",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'B', 'B2')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B2",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 84"
+    },
+    "license_plate": "KG 628 WY",
+    "room_number": "789",
+    "timestamp": "2025-08-17T16:15:54.813856"
+  },
+  "('unutrasnji', 1, 'B', 'B3')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B3",
+    "status": "current",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'B', 'B4')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B4",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'B', 'B5')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B5",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'B', 'B6')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B6",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'B', 'B7')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B7",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'B', 'B8')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B8",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'B', 'B9')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B9",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'B', 'B10')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B10",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 59"
+    },
+    "license_plate": "KG 353 BE",
+    "room_number": "835",
+    "timestamp": "2025-08-17T16:15:54.815365"
+  },
+  "('unutrasnji', 1, 'B', 'B11')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B11",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'B', 'B12')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B12",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 23"
+    },
+    "license_plate": "KG 292 YP",
+    "room_number": "489",
+    "timestamp": "2025-08-17T16:15:54.815365"
+  },
+  "('unutrasnji', 1, 'B', 'B13')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B13",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'B', 'B14')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B14",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 45"
+    },
+    "license_plate": "KG 862 PT",
+    "room_number": "876",
+    "timestamp": "2025-08-17T16:15:54.815365"
+  },
+  "('unutrasnji', 1, 'C', 'C1')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C1",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C2')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C2",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C3')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C4')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C4",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C5')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C5",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C6')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C6",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 79"
+    },
+    "license_plate": "KG 317 KE",
+    "room_number": "501",
+    "timestamp": "2025-08-17T16:15:54.816379"
+  },
+  "('unutrasnji', 1, 'C', 'C7')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C7",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 49"
+    },
+    "license_plate": "KG 421 AS",
+    "room_number": "716",
+    "timestamp": "2025-08-17T16:15:54.816379"
+  },
+  "('unutrasnji', 1, 'C', 'C8')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C8",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C9')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C9",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C10')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C10",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C11')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C11",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 6"
+    },
+    "license_plate": "KG 289 RE",
+    "room_number": "107",
+    "timestamp": "2025-08-17T16:15:54.816379"
+  },
+  "('unutrasnji', 1, 'C', 'C12')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C12",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 32"
+    },
+    "license_plate": "KG 176 JC",
+    "room_number": "796",
+    "timestamp": "2025-08-17T16:15:54.816379"
+  },
+  "('unutrasnji', 1, 'C', 'C13')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C13",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C14')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C14",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 14"
+    },
+    "license_plate": "KG 755 II",
+    "room_number": "556",
+    "timestamp": "2025-08-17T16:15:54.817376"
+  },
+  "('unutrasnji', 1, 'C', 'C15')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C15",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C16')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C16",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C17')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C17",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C18')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C18",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C19')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C19",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C20')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C20",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 1, 'C', 'C21')": {
+    "parking_type": "unutrasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C21",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'A', 'A1')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A1",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 6"
+    },
+    "license_plate": "KG 348 OR",
+    "room_number": "575",
+    "timestamp": "2025-08-17T16:15:54.817376"
+  },
+  "('unutrasnji', 2, 'A', 'A2')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A2",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'A', 'A3')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'A', 'A4')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A4",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 93"
+    },
+    "license_plate": "KG 182 RV",
+    "room_number": "197",
+    "timestamp": "2025-08-17T16:15:54.817376"
+  },
+  "('unutrasnji', 2, 'A', 'A5')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A5",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'A', 'A6')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A6",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 12"
+    },
+    "license_plate": "KG 880 PD",
+    "room_number": "216",
+    "timestamp": "2025-08-17T16:15:54.817376"
+  },
+  "('unutrasnji', 2, 'A', 'A7')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A7",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'A', 'A8')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A8",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'A', 'A9')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A9",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'A', 'A10')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A10",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'B', 'B1')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B1",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'B', 'B2')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B2",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'B', 'B3')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'B', 'B4')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B4",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 33"
+    },
+    "license_plate": "KG 488 NC",
+    "room_number": "534",
+    "timestamp": "2025-08-17T16:15:54.818374"
+  },
+  "('unutrasnji', 2, 'B', 'B5')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B5",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 84"
+    },
+    "license_plate": "KG 574 NU",
+    "room_number": "647",
+    "timestamp": "2025-08-17T16:15:54.818374"
+  },
+  "('unutrasnji', 2, 'B', 'B6')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B6",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'B', 'B7')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B7",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'B', 'B8')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B8",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'B', 'B9')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B9",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 81"
+    },
+    "license_plate": "KG 493 RB",
+    "room_number": "998",
+    "timestamp": "2025-08-17T16:15:54.818374"
+  },
+  "('unutrasnji', 2, 'B', 'B10')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B10",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'B', 'B11')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B11",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 32"
+    },
+    "license_plate": "KG 157 JH",
+    "room_number": "607",
+    "timestamp": "2025-08-17T16:15:54.818374"
+  },
+  "('unutrasnji', 2, 'B', 'B12')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B12",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 68"
+    },
+    "license_plate": "KG 127 YL",
+    "room_number": "260",
+    "timestamp": "2025-08-17T16:15:54.819375"
+  },
+  "('unutrasnji', 2, 'B', 'B13')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B13",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'B', 'B14')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B14",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'B', 'B15')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B15",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'B', 'B16')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B16",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 27"
+    },
+    "license_plate": "KG 839 KO",
+    "room_number": "333",
+    "timestamp": "2025-08-17T16:15:54.819375"
+  },
+  "('unutrasnji', 2, 'B', 'B17')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B17",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 73"
+    },
+    "license_plate": "KG 355 FK",
+    "room_number": "558",
+    "timestamp": "2025-08-17T16:15:54.819375"
+  },
+  "('unutrasnji', 2, 'C', 'C1')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C1",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'C', 'C2')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C2",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'C', 'C3')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C3",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 63"
+    },
+    "license_plate": "KG 365 UH",
+    "room_number": "579",
+    "timestamp": "2025-08-17T16:15:54.819375"
+  },
+  "('unutrasnji', 2, 'C', 'C4')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C4",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 83"
+    },
+    "license_plate": "KG 331 MK",
+    "room_number": "747",
+    "timestamp": "2025-08-17T16:15:54.819375"
+  },
+  "('unutrasnji', 2, 'C', 'C5')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C5",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'C', 'C6')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C6",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 99"
+    },
+    "license_plate": "KG 909 LO",
+    "room_number": "347",
+    "timestamp": "2025-08-17T16:15:54.820376"
+  },
+  "('unutrasnji', 2, 'C', 'C7')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C7",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'C', 'C8')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C8",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 95"
+    },
+    "license_plate": "KG 958 LZ",
+    "room_number": "516",
+    "timestamp": "2025-08-17T16:15:54.820376"
+  },
+  "('unutrasnji', 2, 'C', 'C9')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C9",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'C', 'C10')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C10",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'C', 'C11')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C11",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 48"
+    },
+    "license_plate": "KG 929 QT",
+    "room_number": "238",
+    "timestamp": "2025-08-17T16:15:54.820376"
+  },
+  "('unutrasnji', 2, 'D', 'D1')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "D",
+    "spot_number": "D1",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'D', 'D2')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "D",
+    "spot_number": "D2",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 90"
+    },
+    "license_plate": "KG 942 DE",
+    "room_number": "510",
+    "timestamp": "2025-08-17T16:15:54.820376"
+  },
+  "('unutrasnji', 2, 'D', 'D3')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "D",
+    "spot_number": "D3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'D', 'D4')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "D",
+    "spot_number": "D4",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 55"
+    },
+    "license_plate": "KG 241 JB",
+    "room_number": "837",
+    "timestamp": "2025-08-17T16:15:54.820376"
+  },
+  "('unutrasnji', 2, 'D', 'D5')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "D",
+    "spot_number": "D5",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'D', 'D6')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "D",
+    "spot_number": "D6",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 80"
+    },
+    "license_plate": "KG 854 YC",
+    "room_number": "153",
+    "timestamp": "2025-08-17T16:15:54.820376"
+  },
+  "('unutrasnji', 2, 'D', 'D7')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "D",
+    "spot_number": "D7",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'D', 'D8')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "D",
+    "spot_number": "D8",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 2, 'D', 'D9')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "D",
+    "spot_number": "D9",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 56"
+    },
+    "license_plate": "KG 851 OA",
+    "room_number": "924",
+    "timestamp": "2025-08-17T16:15:54.821377"
+  },
+  "('unutrasnji', 2, 'D', 'D10')": {
+    "parking_type": "unutrasnji",
+    "level": 2,
+    "section": "D",
+    "spot_number": "D10",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'A', 'A1')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A1",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 82"
+    },
+    "license_plate": "KG 825 PH",
+    "room_number": "158",
+    "timestamp": "2025-08-17T16:15:54.821377"
+  },
+  "('unutrasnji', 3, 'A', 'A2')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A2",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 67"
+    },
+    "license_plate": "KG 942 WZ",
+    "room_number": "442",
+    "timestamp": "2025-08-17T16:15:54.821377"
+  },
+  "('unutrasnji', 3, 'A', 'A3')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'A', 'A4')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A4",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'A', 'A5')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A5",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'A', 'A6')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A6",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 90"
+    },
+    "license_plate": "KG 404 GQ",
+    "room_number": "946",
+    "timestamp": "2025-08-17T16:15:54.821377"
+  },
+  "('unutrasnji', 3, 'A', 'A7')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A7",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'A', 'A8')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A8",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'A', 'A9')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A9",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 92"
+    },
+    "license_plate": "KG 177 LC",
+    "room_number": "328",
+    "timestamp": "2025-08-17T16:15:54.821377"
+  },
+  "('unutrasnji', 3, 'A', 'A10')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A10",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 95"
+    },
+    "license_plate": "KG 542 KF",
+    "room_number": "435",
+    "timestamp": "2025-08-17T16:15:54.821377"
+  },
+  "('unutrasnji', 3, 'A', 'A11')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A11",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'A', 'A12')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A12",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'A', 'A13')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A13",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'A', 'A14')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "A",
+    "spot_number": "A14",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 58"
+    },
+    "license_plate": "KG 468 IT",
+    "room_number": "200",
+    "timestamp": "2025-08-17T16:15:54.822373"
+  },
+  "('unutrasnji', 3, 'B', 'B1')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B1",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 70"
+    },
+    "license_plate": "KG 225 PX",
+    "room_number": "345",
+    "timestamp": "2025-08-17T16:15:54.822373"
+  },
+  "('unutrasnji', 3, 'B', 'B2')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B2",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B3')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B4')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B4",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 38"
+    },
+    "license_plate": "KG 610 CP",
+    "room_number": "189",
+    "timestamp": "2025-08-17T16:15:54.822373"
+  },
+  "('unutrasnji', 3, 'B', 'B5')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B5",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B6')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B6",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 97"
+    },
+    "license_plate": "KG 162 DV",
+    "room_number": "367",
+    "timestamp": "2025-08-17T16:15:54.822373"
+  },
+  "('unutrasnji', 3, 'B', 'B7')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B7",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B8')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B8",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 29"
+    },
+    "license_plate": "KG 188 CQ",
+    "room_number": "331",
+    "timestamp": "2025-08-17T16:15:54.822373"
+  },
+  "('unutrasnji', 3, 'B', 'B9')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B9",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 8"
+    },
+    "license_plate": "KG 777 TQ",
+    "room_number": "902",
+    "timestamp": "2025-08-17T16:15:54.822373"
+  },
+  "('unutrasnji', 3, 'B', 'B10')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B10",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 75"
+    },
+    "license_plate": "KG 113 NH",
+    "room_number": "148",
+    "timestamp": "2025-08-17T16:15:54.822373"
+  },
+  "('unutrasnji', 3, 'B', 'B11')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B11",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B12')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B12",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B13')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B13",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B14')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B14",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B15')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B15",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B16')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B16",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B17')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B17",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B18')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B18",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B19')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B19",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('unutrasnji', 3, 'B', 'B20')": {
+    "parking_type": "unutrasnji",
+    "level": 3,
+    "section": "B",
+    "spot_number": "B20",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 42"
+    },
+    "license_plate": "KG 645 NR",
+    "room_number": "928",
+    "timestamp": "2025-08-17T16:15:54.823887"
+  },
+  "('spoljasnji', 1, 'A', 'A1')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A1",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 85"
+    },
+    "license_plate": "KG 932 VZ",
+    "room_number": "419",
+    "timestamp": "2025-08-17T16:15:54.823887"
+  },
+  "('spoljasnji', 1, 'A', 'A2')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A2",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 80"
+    },
+    "license_plate": "KG 409 GC",
+    "room_number": "479",
+    "timestamp": "2025-08-17T16:15:54.823887"
+  },
+  "('spoljasnji', 1, 'A', 'A3')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'A', 'A4')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A4",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 75"
+    },
+    "license_plate": "KG 373 PA",
+    "room_number": "987",
+    "timestamp": "2025-08-17T16:15:54.823887"
+  },
+  "('spoljasnji', 1, 'A', 'A5')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A5",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'A', 'A6')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A6",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 24"
+    },
+    "license_plate": "KG 869 AU",
+    "room_number": "688",
+    "timestamp": "2025-08-17T16:15:54.823887"
+  },
+  "('spoljasnji', 1, 'A', 'A7')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A7",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'A', 'A8')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A8",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 74"
+    },
+    "license_plate": "KG 795 RC",
+    "room_number": "513",
+    "timestamp": "2025-08-17T16:15:54.824904"
+  },
+  "('spoljasnji', 1, 'A', 'A9')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A9",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'A', 'A10')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A10",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'A', 'A11')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A11",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'A', 'A12')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A12",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'A', 'A13')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A13",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 10"
+    },
+    "license_plate": "KG 389 KC",
+    "room_number": "983",
+    "timestamp": "2025-08-17T16:15:54.824904"
+  },
+  "('spoljasnji', 1, 'A', 'A14')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A14",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'A', 'A15')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A15",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 72"
+    },
+    "license_plate": "KG 123 YR",
+    "room_number": "832",
+    "timestamp": "2025-08-17T16:15:54.824904"
+  },
+  "('spoljasnji', 1, 'A', 'A16')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "A",
+    "spot_number": "A16",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 78"
+    },
+    "license_plate": "KG 996 KA",
+    "room_number": "858",
+    "timestamp": "2025-08-17T16:15:54.824904"
+  },
+  "('spoljasnji', 1, 'B', 'B1')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B1",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'B', 'B2')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B2",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'B', 'B3')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'B', 'B4')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B4",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 12"
+    },
+    "license_plate": "KG 982 YT",
+    "room_number": "160",
+    "timestamp": "2025-08-17T16:15:54.824904"
+  },
+  "('spoljasnji', 1, 'B', 'B5')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B5",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'B', 'B6')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B6",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 64"
+    },
+    "license_plate": "KG 551 HR",
+    "room_number": "224",
+    "timestamp": "2025-08-17T16:15:54.825952"
+  },
+  "('spoljasnji', 1, 'B', 'B7')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B7",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'B', 'B8')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B8",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 84"
+    },
+    "license_plate": "KG 699 YA",
+    "room_number": "965",
+    "timestamp": "2025-08-17T16:15:54.825952"
+  },
+  "('spoljasnji', 1, 'B', 'B9')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B9",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'B', 'B10')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B10",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'B', 'B11')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B11",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 9"
+    },
+    "license_plate": "KG 252 EW",
+    "room_number": "211",
+    "timestamp": "2025-08-17T16:15:54.825952"
+  },
+  "('spoljasnji', 1, 'B', 'B12')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B12",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 54"
+    },
+    "license_plate": "KG 799 MZ",
+    "room_number": "445",
+    "timestamp": "2025-08-17T16:15:54.825952"
+  },
+  "('spoljasnji', 1, 'B', 'B13')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B13",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'B', 'B14')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B14",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'B', 'B15')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B15",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'B', 'B16')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B16",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 76"
+    },
+    "license_plate": "KG 481 NF",
+    "room_number": "410",
+    "timestamp": "2025-08-17T16:15:54.825952"
+  },
+  "('spoljasnji', 1, 'B', 'B17')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "B",
+    "spot_number": "B17",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 18"
+    },
+    "license_plate": "KG 280 UN",
+    "room_number": "480",
+    "timestamp": "2025-08-17T16:15:54.825952"
+  },
+  "('spoljasnji', 1, 'C', 'C1')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C1",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'C', 'C2')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C2",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'C', 'C3')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'C', 'C4')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C4",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 77"
+    },
+    "license_plate": "KG 771 BC",
+    "room_number": "869",
+    "timestamp": "2025-08-17T16:15:54.825952"
+  },
+  "('spoljasnji', 1, 'C', 'C5')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C5",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 16"
+    },
+    "license_plate": "KG 786 CS",
+    "room_number": "587",
+    "timestamp": "2025-08-17T16:15:54.825952"
+  },
+  "('spoljasnji', 1, 'C', 'C6')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C6",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'C', 'C7')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C7",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 33"
+    },
+    "license_plate": "KG 802 BP",
+    "room_number": "715",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'C', 'C8')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C8",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'C', 'C9')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C9",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 64"
+    },
+    "license_plate": "KG 151 ZA",
+    "room_number": "803",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'C', 'C10')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C10",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'C', 'C11')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C11",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'C', 'C12')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C12",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'C', 'C13')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "C",
+    "spot_number": "C13",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 9"
+    },
+    "license_plate": "KG 481 HD",
+    "room_number": "372",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'D', 'D1')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D1",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'D', 'D2')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D2",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 71"
+    },
+    "license_plate": "KG 701 QC",
+    "room_number": "769",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'D', 'D3')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D3",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 85"
+    },
+    "license_plate": "KG 697 VG",
+    "room_number": "248",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'D', 'D4')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D4",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 25"
+    },
+    "license_plate": "KG 661 ZU",
+    "room_number": "600",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'D', 'D5')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D5",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'D', 'D6')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D6",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 61"
+    },
+    "license_plate": "KG 539 VP",
+    "room_number": "713",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'D', 'D7')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D7",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 15"
+    },
+    "license_plate": "KG 250 QZ",
+    "room_number": "713",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'D', 'D8')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D8",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 14"
+    },
+    "license_plate": "KG 475 YK",
+    "room_number": "556",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'D', 'D9')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D9",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 97"
+    },
+    "license_plate": "KG 493 JS",
+    "room_number": "360",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'D', 'D10')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D10",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 87"
+    },
+    "license_plate": "KG 977 TA",
+    "room_number": "512",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'D', 'D11')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D11",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'D', 'D12')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D12",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'D', 'D13')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D13",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 86"
+    },
+    "license_plate": "KG 119 ER",
+    "room_number": "934",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'D', 'D14')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D14",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 72"
+    },
+    "license_plate": "KG 796 WV",
+    "room_number": "420",
+    "timestamp": "2025-08-17T16:15:54.826943"
+  },
+  "('spoljasnji', 1, 'D', 'D15')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D15",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 13"
+    },
+    "license_plate": "KG 470 OP",
+    "room_number": "491",
+    "timestamp": "2025-08-17T16:15:54.828091"
+  },
+  "('spoljasnji', 1, 'D', 'D16')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D16",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 5"
+    },
+    "license_plate": "KG 607 NR",
+    "room_number": "244",
+    "timestamp": "2025-08-17T16:15:54.828091"
+  },
+  "('spoljasnji', 1, 'D', 'D17')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D17",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 25"
+    },
+    "license_plate": "KG 841 ET",
+    "room_number": "923",
+    "timestamp": "2025-08-17T16:15:54.828091"
+  },
+  "('spoljasnji', 1, 'D', 'D18')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D18",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'D', 'D19')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D19",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 30"
+    },
+    "license_plate": "KG 198 ZJ",
+    "room_number": "363",
+    "timestamp": "2025-08-17T16:15:54.828091"
+  },
+  "('spoljasnji', 1, 'D', 'D20')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D20",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'D', 'D21')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "D",
+    "spot_number": "D21",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'E', 'E1')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E1",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 64"
+    },
+    "license_plate": "KG 586 QD",
+    "room_number": "663",
+    "timestamp": "2025-08-17T16:15:54.828091"
+  },
+  "('spoljasnji', 1, 'E', 'E2')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E2",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 73"
+    },
+    "license_plate": "KG 710 JA",
+    "room_number": "714",
+    "timestamp": "2025-08-17T16:15:54.828091"
+  },
+  "('spoljasnji', 1, 'E', 'E3')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'E', 'E4')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E4",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 50"
+    },
+    "license_plate": "KG 798 WI",
+    "room_number": "320",
+    "timestamp": "2025-08-17T16:15:54.828091"
+  },
+  "('spoljasnji', 1, 'E', 'E5')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E5",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 14"
+    },
+    "license_plate": "KG 633 SS",
+    "room_number": "481",
+    "timestamp": "2025-08-17T16:15:54.829092"
+  },
+  "('spoljasnji', 1, 'E', 'E6')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E6",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'E', 'E7')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E7",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'E', 'E8')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E8",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 72"
+    },
+    "license_plate": "KG 403 KD",
+    "room_number": "686",
+    "timestamp": "2025-08-17T16:15:54.829092"
+  },
+  "('spoljasnji', 1, 'E', 'E9')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E9",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 34"
+    },
+    "license_plate": "KG 255 II",
+    "room_number": "412",
+    "timestamp": "2025-08-17T16:15:54.829092"
+  },
+  "('spoljasnji', 1, 'E', 'E10')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E10",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'E', 'E11')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E11",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'E', 'E12')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E12",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'E', 'E13')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E13",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'E', 'E14')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E14",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'E', 'E15')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E15",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 6"
+    },
+    "license_plate": "KG 369 IT",
+    "room_number": "507",
+    "timestamp": "2025-08-17T16:15:54.829092"
+  },
+  "('spoljasnji', 1, 'E', 'E16')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E16",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 22"
+    },
+    "license_plate": "KG 454 GT",
+    "room_number": "622",
+    "timestamp": "2025-08-17T16:15:54.830088"
+  },
+  "('spoljasnji', 1, 'E', 'E17')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E17",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 47"
+    },
+    "license_plate": "KG 743 WX",
+    "room_number": "790",
+    "timestamp": "2025-08-17T16:15:54.830088"
+  },
+  "('spoljasnji', 1, 'E', 'E18')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E18",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 1, 'E', 'E19')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E19",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 31"
+    },
+    "license_plate": "KG 963 DR",
+    "room_number": "896",
+    "timestamp": "2025-08-17T16:15:54.830088"
+  },
+  "('spoljasnji', 1, 'E', 'E20')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E20",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 24"
+    },
+    "license_plate": "KG 243 JN",
+    "room_number": "820",
+    "timestamp": "2025-08-17T16:15:54.830088"
+  },
+  "('spoljasnji', 1, 'E', 'E21')": {
+    "parking_type": "spoljasnji",
+    "level": 1,
+    "section": "E",
+    "spot_number": "E21",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A1')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A1",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A2')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A2",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A3')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A4')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A4",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A5')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A5",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 22"
+    },
+    "license_plate": "KG 674 RO",
+    "room_number": "418",
+    "timestamp": "2025-08-17T16:15:54.830088"
+  },
+  "('spoljasnji', 2, 'A', 'A6')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A6",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A7')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A7",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 6"
+    },
+    "license_plate": "KG 636 IC",
+    "room_number": "786",
+    "timestamp": "2025-08-17T16:15:54.830088"
+  },
+  "('spoljasnji', 2, 'A', 'A8')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A8",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A9')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A9",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A10')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A10",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 26"
+    },
+    "license_plate": "KG 502 RP",
+    "room_number": "801",
+    "timestamp": "2025-08-17T16:15:54.830088"
+  },
+  "('spoljasnji', 2, 'A', 'A11')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A11",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A12')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A12",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A13')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A13",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 100"
+    },
+    "license_plate": "KG 980 JP",
+    "room_number": "148",
+    "timestamp": "2025-08-17T16:15:54.831550"
+  },
+  "('spoljasnji', 2, 'A', 'A14')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A14",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A15')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A15",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A16')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A16",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'A', 'A17')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "A",
+    "spot_number": "A17",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 95"
+    },
+    "license_plate": "KG 497 RX",
+    "room_number": "993",
+    "timestamp": "2025-08-17T16:15:54.831550"
+  },
+  "('spoljasnji', 2, 'B', 'B1')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B1",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'B', 'B2')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B2",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 8"
+    },
+    "license_plate": "KG 541 KQ",
+    "room_number": "290",
+    "timestamp": "2025-08-17T16:15:54.831550"
+  },
+  "('spoljasnji', 2, 'B', 'B3')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B3",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'B', 'B4')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B4",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'B', 'B5')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B5",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 72"
+    },
+    "license_plate": "KG 967 QV",
+    "room_number": "321",
+    "timestamp": "2025-08-17T16:15:54.832551"
+  },
+  "('spoljasnji', 2, 'B', 'B6')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B6",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'B', 'B7')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B7",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 55"
+    },
+    "license_plate": "KG 673 VJ",
+    "room_number": "618",
+    "timestamp": "2025-08-17T16:15:54.832551"
+  },
+  "('spoljasnji', 2, 'B', 'B8')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B8",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'B', 'B9')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B9",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'B', 'B10')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B10",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 13"
+    },
+    "license_plate": "KG 665 AP",
+    "room_number": "249",
+    "timestamp": "2025-08-17T16:15:54.832551"
+  },
+  "('spoljasnji', 2, 'B', 'B11')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B11",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'B', 'B12')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B12",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'B', 'B13')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "B",
+    "spot_number": "B13",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'C', 'C1')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C1",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'C', 'C2')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C2",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'C', 'C3')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C3",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 47"
+    },
+    "license_plate": "KG 891 ZN",
+    "room_number": "506",
+    "timestamp": "2025-08-17T16:15:54.832551"
+  },
+  "('spoljasnji', 2, 'C', 'C4')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C4",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 97"
+    },
+    "license_plate": "KG 356 FW",
+    "room_number": "986",
+    "timestamp": "2025-08-17T16:15:54.832551"
+  },
+  "('spoljasnji', 2, 'C', 'C5')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C5",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'C', 'C6')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C6",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'C', 'C7')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C7",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 39"
+    },
+    "license_plate": "KG 589 CH",
+    "room_number": "543",
+    "timestamp": "2025-08-17T16:15:54.832551"
+  },
+  "('spoljasnji', 2, 'C', 'C8')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C8",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'C', 'C9')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C9",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 80"
+    },
+    "license_plate": "KG 147 BY",
+    "room_number": "249",
+    "timestamp": "2025-08-17T16:15:54.832551"
+  },
+  "('spoljasnji', 2, 'C', 'C10')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C10",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'C', 'C11')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C11",
+    "status": "occupied",
+    "guest_info": {
+      "name": "Guest 22"
+    },
+    "license_plate": "KG 353 DT",
+    "room_number": "692",
+    "timestamp": "2025-08-17T16:15:54.833552"
+  },
+  "('spoljasnji', 2, 'C', 'C12')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C12",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'C', 'C13')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C13",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'C', 'C14')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C14",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'C', 'C15')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C15",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'C', 'C16')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C16",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  },
+  "('spoljasnji', 2, 'C', 'C17')": {
+    "parking_type": "spoljasnji",
+    "level": 2,
+    "section": "C",
+    "spot_number": "C17",
+    "status": "free",
+    "guest_info": null,
+    "license_plate": null,
+    "room_number": null,
+    "timestamp": null
+  }
+}
