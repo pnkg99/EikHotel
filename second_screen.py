@@ -134,16 +134,19 @@ class SecondScreen(DefaultScreen):
             
         randint = random.randint(1, 1000000000)
         self.parent_window.screen_manager.token = randint
+        print(self.parent_window.screen_manager.uid, 6, randint)
+        out = self.parent_window.screen_manager.nfc_reader.write_block(self.parent_window.screen_manager.uid, 6, randint)
+        print(out)
+        return
         register = register_guest(room_number, name, self.parent_window.screen_manager.uid, randint, self.parent_window.screen_manager.cvc)
         if register :            
             # Prikaz custom modala
             modal = CustomModal("Uspešno ste dodali gosta".upper(), "notification", "success")
             #    def write_block(self, uid: bytes, block: int, data: str) -> bool:
-            self.parent_window.screen_manager.nfc_reader.write_block(self.parent_window.screen_manager.uid, 6, randint)
             modal.show()
             self.parent_window.screen_manager.show_screen("home")
         else : 
-            self.parent_window.screen_manager.show_screen("customer")
+            
             modal = CustomModal("Greška!", "notification", "error")
             modal.show()
 
