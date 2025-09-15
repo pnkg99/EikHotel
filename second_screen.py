@@ -145,6 +145,8 @@ class SecondScreen(DefaultScreen):
         else : 
             modal = CustomModal("Greška!", "notification", "error")
             modal.show()
+            self.parent_window.screen_manager.show_screen("home")
+
             
         # Reset forme
         self.room_input.clear()

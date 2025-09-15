@@ -13,7 +13,6 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Eik Hotel")
         self.showFullScreen()
         
-        
         def keyPressEvent(self, event):
             if event.key() == Qt.Key_Escape:
                 QApplication.quit()  # zatvara celu aplikaciju
