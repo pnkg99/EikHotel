@@ -35,8 +35,8 @@ class ScreenManager(QStackedWidget):
           
     def _handle_read_card(self, uid):
         self.uid = uid
-        self.token = self.nfc_reader.read_block_simple(uid)
-
+        self.token = self.nfc_reader.read_block()
+        print("Dobio sam: ", self.token)
         if self.token :
             resp = read_nfc_card(self.token, "8888888")
             print(resp)

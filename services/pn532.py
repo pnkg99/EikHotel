@@ -298,7 +298,7 @@ class NFCReader:
         else:
             self.debugger.log(DebugLevel.ERROR, "Oporavak neuspešan")
     
-    def read_block(self, uid: bytes, block: int):
+    def read_block(self, block: int = 6):
         """Čita podatke iz datog MIFARE bloka sa error handling-om"""
         try:
             self.debugger.log(DebugLevel.DEBUG, f"Čitam podatke iz bloka {block}")
