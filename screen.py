@@ -134,6 +134,7 @@ class ScreenManager(QStackedWidget):
                     print("Nema odgovora od web servisa")
             else:
                 print("Token nije pročitan sa kartice")
+                self.show_screen("register")
                 
         except Exception as e:
             print(f"Greška pri obradi kartice: {e}")
