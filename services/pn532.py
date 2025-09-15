@@ -339,7 +339,7 @@ class NFCReader:
             data = self.pn532.mifare_classic_read_block(self.block)
             return ''.join(chr(b) for b in data if 32 <= b <= 126).rstrip('\x00')
         except Exception as e:
-            self.log(f"Greška pri čitanju: {e}")
+            self.debugger.log(f"Greška pri čitanju: {e}")
             return ""
 
     def _authenticate_block(self, uid: bytes, block: int) :
