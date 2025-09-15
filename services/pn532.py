@@ -272,7 +272,7 @@ class NFCReader:
     def _safe_callback(self, uid: bytes, uid_hex: str):
         """Bezbedni poziv callback funkcije"""
         try:
-            self.on_card_read(uid, uid_hex)
+            self.on_card_read()
         except Exception as e:
             self.debugger.log(DebugLevel.ERROR, f"Greška u callback funkciji: {str(e)}", e)
     
