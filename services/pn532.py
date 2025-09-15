@@ -253,7 +253,7 @@ class NFCReader:
                     
                     # Bezbedni callback poziv
                     try:
-                        QTimer.singleShot(0, lambda: self._safe_callback(uid, uid_hex))
+                        QTimer.singleShot(0, lambda: self._safe_callback(uid))
                     except Exception as e:
                         self.debugger.log(DebugLevel.ERROR, "Greška u callback pozivu", e)
             else:
