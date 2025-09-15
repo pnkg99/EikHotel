@@ -336,7 +336,7 @@ class NFCReader:
     def read_block_simple(self, uid: bytes):
         """Čita string iz bloka 6"""
         try:
-            data = self.pn532.mifare_classic_read_block(self.block)
+            data = self.connection_manager.pn532.mifare_classic_read_block(self.block)
             return ''.join(chr(b) for b in data if 32 <= b <= 126).rstrip('\x00')
         except Exception as e:
             self.debugger.log(DebugLevel.ERROR, f"Greška pri čitanju: {e}")
