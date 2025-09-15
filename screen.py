@@ -34,12 +34,11 @@ class ScreenManager(QStackedWidget):
             print(self.parking_allocated)
           
     def _handle_read_card(self, uid, uuid):
-        self.uid = self.nfc_reader.last_uid
-        self.number = self.nfc_reader.read_block(self.uid, 8)
-        self.cvc = self.nfc_reader.read_cvc_code_block(self.pin)
+        self.uid = uid
+        self.token = self.nfc_reader.read_block_simple(uid)
 
-        if self.number and self.cvc:
-            resp = read_nfc_card(self.number, self.cvc)
+        if self.token :
+            resp = read_nfc_card(self.token, "8888888")
             print(resp)
             if resp:
                 if resp["status"] == 2:

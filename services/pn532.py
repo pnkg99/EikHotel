@@ -178,8 +178,7 @@ class NFCReader:
         
         # MIFARE parametri
         self.default_key = [0xFF] * 6
-        self.card_number_block = 8
-        self.cvc_code_block = 9
+        self.block = 6
         
         # Timer za operacije
         self.read_timer = None
@@ -299,82 +298,6 @@ class NFCReader:
         else:
             self.debugger.log(DebugLevel.ERROR, "Oporavak neuspešan")
     
-    def write_card_number_block(self, uid: bytes, card_number: str):
-        try:
-            self.debugger.log(DebugLevel.DEBUG, f"Upisujem card_number u blok {self.card_number_block}")
-            
-            # Pripremi podatke
-            card_bytes = self._prepare_block_data(card_number.encode('utf-8'))
-            
-            # Autentifikacija
-            if not self._authenticate_block(uid, self.card_number_block):
-                return False
-            
-            # Upis
-            if not self.connection_manager.pn532.mifare_classic_write_block(self.card_number_block, card_bytes):
-                self.debugger.log(DebugLevel.ERROR, f"Upis u blok {self.card_number_block} neuspešan")
-                return False
-            
-            self.debugger.log(DebugLevel.INFO, f"Card number uspešno upisan u blok {self.card_number_block}")
-            self.debugger.increment_stat('writes')
-            return True
-            
-        except Exception as e:
-            self.debugger.log(DebugLevel.ERROR, f"Greška pri upisu card_number", e)
-            return False
-    
-    def write_cvc_code_block(self, uid: bytes, cvc_code: str, pin: str) :
-        """Šifrira i upisuje cvc_code u blok sa error handling-om"""
-        try:
-            self.debugger.log(DebugLevel.DEBUG, f"Upisujem CVC kod u blok {self.cvc_code_block}")
-            
-            # Šifrovanje
-            encrypted = self._encrypt_with_pin(cvc_code, pin)
-            enc_bytes = self._prepare_block_data(encrypted)
-            
-            # Autentifikacija
-            if not self._authenticate_block(uid, self.cvc_code_block):
-                return False
-            
-            # Upis
-            if not self.connection_manager.pn532.mifare_classic_write_block(self.cvc_code_block, enc_bytes):
-                self.debugger.log(DebugLevel.ERROR, f"Upis u blok {self.cvc_code_block} neuspešan")
-                return False
-            
-            self.debugger.log(DebugLevel.INFO, f"CVC kod uspešno upisan u blok {self.cvc_code_block}")
-            self.debugger.increment_stat('writes')
-            return True
-            
-        except Exception as e:
-            self.debugger.log(DebugLevel.ERROR, f"Greška pri upisu CVC koda", e)
-            return False
-    
-    def read_card_number_block(self, uid: bytes) :
-        """Čita card_number iz bloka sa error handling-om"""
-        try:
-            self.debugger.log(DebugLevel.DEBUG, f"Čitam card_number iz bloka {self.card_number_block}")
-            
-            # Autentifikacija
-            if not self._authenticate_block(uid, self.card_number_block):
-                return None
-            
-            # Čitanje
-            data = self.connection_manager.pn532.mifare_classic_read_block(self.card_number_block)
-            if not data:
-                self.debugger.log(DebugLevel.ERROR, f"Čitanje bloka {self.card_number_block} neuspešno")
-                return None
-            
-            # Dekodiranje
-            result = self._decode_block_data(data)
-            self.debugger.log(DebugLevel.INFO, f"Card number uspešno pročitan iz bloka {self.card_number_block}")
-            self.debugger.increment_stat('reads')
-            return result
-            
-        except Exception as e:
-            self.debugger.log(DebugLevel.ERROR, f"Greška pri čitanju card_number", e)
-            return None
-    
-    
     def read_block(self, uid: bytes, block: int):
         """Čita podatke iz datog MIFARE bloka sa error handling-om"""
         try:
@@ -400,31 +323,34 @@ class NFCReader:
             self.debugger.log(DebugLevel.ERROR, f"Greška pri čitanju bloka {block}", e)
             return None
 
-    def read_cvc_code_block(self, uid: bytes, pin: str) :
-        """Čita i dešifruje cvc_code iz bloka sa error handling-om"""
+        def write_block(self, uid: bytes, data: str) -> bool:
+            """Upisuje string u blok 6 (do 16 bajtova)"""
         try:
-            self.debugger.log(DebugLevel.DEBUG, f"Čitam CVC kod iz bloka {self.cvc_code_block}")
-            
-            # Autentifikacija
-            if not self._authenticate_block(uid, self.cvc_code_block):
-                return None
-            
-            # Čitanje
-            data = self.connection_manager.pn532.mifare_classic_read_block(self.cvc_code_block)
-            if not data:
-                self.debugger.log(DebugLevel.ERROR, f"Čitanje bloka {self.cvc_code_block} neuspešno")
-                return None
-            
-            # Dešifrovanje
-            result = self._decrypt_with_pin(data, pin)
-            self.debugger.log(DebugLevel.INFO, f"CVC kod uspešno pročitan iz bloka {self.cvc_code_block}")
-            self.debugger.increment_stat('reads')
-            return result
-            
+            if not self._authenticate(uid):
+                self.log("Upis: autentifikacija neuspešna")
+                return False
+
+            block_data = list(data.encode('utf-8'))[:16]
+            block_data += [0x00] * (16 - len(block_data))  # padding do 16
+            self.pn532.mifare_classic_write_block(self.block, block_data)
+            self.log(f"Upisano u blok {self.block}: {data}")
+            return True
         except Exception as e:
-            self.debugger.log(DebugLevel.ERROR, f"Greška pri čitanju CVC koda", e)
-            return None
-    
+            self.log(f"Greška pri upisu: {e}")
+            return False
+
+    def read_block_simple(self, uid: bytes):
+        """Čita string iz bloka 6"""
+        try:
+            if not self._authenticate(uid):
+                self.log("Čitanje: autentifikacija neuspešna")
+                return ""
+            data = self.pn532.mifare_classic_read_block(self.block)
+            return ''.join(chr(b) for b in data if 32 <= b <= 126).rstrip('\x00')
+        except Exception as e:
+            self.log(f"Greška pri čitanju: {e}")
+            return ""
+
     def _authenticate_block(self, uid: bytes, block: int) :
         """Autentifikacija bloka sa error handling-om"""
         try:
@@ -543,23 +469,8 @@ class MockNFCReader(NFCReader):
         
         if self.callback:
             self.callback()
-    
-    def write_card_number_block(self, uid: bytes, card_number: str, block_number: int = 8):
-        print(f"Mock: Upisivanje card_number '{card_number}' u blok {block_number}")
-        return True
-    
-    def write_cvc_code_block(self, uid: bytes, cvc_code: str, pin: str, block_number: int = 9):
-        print(f"Mock: Upisivanje CVC '{cvc_code}' u blok {block_number}")
-        return True
-    
-    def read_card_number_block(self, block_number: int = 8):
-        print(f"Mock: Čitanje card_number iz bloka {block_number}")
-        return "1337"
-    
-    def read_cvc_code_block(self, pin: str, block_number: int = 9):
-        print(f"Mock: Čitanje CVC iz bloka {block_number}")
-        return "1337"
 
+    
 
 def create_nfc_reader(callback=None, force_mock: bool = False):
     """Factory funkcija za kreiranje NFC čitača.

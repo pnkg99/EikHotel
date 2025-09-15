@@ -123,6 +123,7 @@ def deactivate_nfc(num, cvc):
     except requests.exceptions.RequestException as e:
         print(f"Došlo je do mrežne greške ili time-outa: {e}")
         return None
+
 def checkout_service(slug, cart_dict):
     url=f"{BASE_URL}nfc-card/checkout"
     payload = {
