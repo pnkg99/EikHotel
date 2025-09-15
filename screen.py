@@ -99,7 +99,7 @@ class ScreenManager(QStackedWidget):
     def _handle_read_card(self, uid):
         """Handler za čitanje NFC kartice"""
         try:
-            self.uid = bytes(uid)
+            self.uid = uid
             uid_hex = ''.join(f"{b:02X}" for b in uid)
             print(f"Kartica detektovana: {uid_hex}")
             
