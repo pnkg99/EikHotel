@@ -5,7 +5,6 @@ import os
 from botbar import BottomBar
 from lang import LANG
 from color import COLORS
-from msgmodal import CustomModal
 
 class FirstScreen(QWidget):
     def __init__(self, parent_window):
