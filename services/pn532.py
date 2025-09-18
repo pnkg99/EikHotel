@@ -28,7 +28,7 @@ class SimpleNFCReader:
         # Inicijalizuj čitač
         self._init_reader()
     
-    def _init_reader(self) -> bool:
+    def _init_reader(self) :
         """Inicijalizuje PN532 čitač"""
         try:
             self.logger.info("Inicijalizujem NFC čitač...")
@@ -95,7 +95,7 @@ class SimpleNFCReader:
         self.is_running = False
         self.logger.info("Polling zaustavljen")
     
-    def read_card_once(self, timeout: float = 1.0) -> Optional[bytes]:
+    def read_card_once(self, timeout: float = 1.0):
         """
         Čita karticu jednom
         :param timeout: Timeout u sekundama
@@ -115,27 +115,24 @@ class SimpleNFCReader:
             self.logger.error(f"Greška pri čitanju: {e}")
             return None
     
-    def authenticate_block(self, uid: bytes, block: int) -> bool:
-        """
-        Autentifikuje blok za čitanje/pisanje
-        :param uid: UID kartice
-        :param block: Broj bloka
-        :return: True ako je autentifikacija uspešna
-        """
+    def authenticate_block(self, uid: bytes, block: int):
         try:
-            return self.pn532.mifare_classic_authenticate_block(
-                uid, block, MIFARE_CMD_AUTH_B, self.default_key
-            )
+            if self.pn532.mifare_classic_authenticate_block(uid, block, MIFARE_CMD_AUTH_A, self.default_key):
+                return True
+            if self.pn532.mifare_classic_authenticate_block(uid, block, MIFARE_CMD_AUTH_B, self.default_key):
+                return True
+            return False
         except Exception as e:
             self.logger.error(f"Greška pri autentifikaciji bloka {block}: {e}")
             return False
+
     
     def read_block(self, uid: bytes, block: int, key: bytes = b"\xFF\xFF\xFF\xFF\xFF\xFF"):
         try:
             uid_list = [b for b in uid]  # PN532 traži listu intova
 
             # Autentifikacija
-            if not self.authenticate_block(uid, block):# self.pn532.mifare_classic_authenticate_block(uid_list, block, MIFARE_CMD_AUTH_A, key):
+            if not self.authenticate_block(uid, block):
                 self.logger.error(f"Autentifikacija neuspešna za blok {block} (key={key.hex()})")
                 return None
 
@@ -155,20 +152,22 @@ class SimpleNFCReader:
             return None
 
     def write_block(self, uid: bytes, block: int, data: str):
-        try:          
-            # Pripremi podatke (16 bajtova sa padding)
+        try:
+            if not self.authenticate_block(uid, block):
+                self.logger.error(f"Autentifikacija neuspešna za blok {block}")
+                return False
+
             block_data = list(data.encode('utf-8'))[:16]
             block_data += [0x00] * (16 - len(block_data))
             
-            # Upiši podatke
             self.pn532.mifare_classic_write_block(block, block_data)
-            self.logger.info(f"Blok {block} upisan: '{data}'")
+            self.logger.info(f"Blok {block} upisan: '{data[:16]}'")
             return True
-            
+
         except Exception as e:
             self.logger.error(f"Greška pri upisu u blok {block}: {e}")
             return False
-    
+
     def read_write_demo(self, block: int = 6):
         """
         Demo funkcija koja čeka karticu i demonstrira čitanje/pisanje
