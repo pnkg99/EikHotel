@@ -178,6 +178,7 @@ class SimpleNFCReader:
 
     def read_block(self, uid: bytes, block: int):
         """Čitanje bloka sa proverom access bits-a"""
+        
         try:
             # Proveri da li je blok sector trailer
             if block % 4 == 3:
@@ -199,6 +200,8 @@ class SimpleNFCReader:
                 if data:
                     text = bytes(data).rstrip(b"\x00").decode("utf-8", errors="ignore")
                     self.logger.info(f"Blok {block} pročitan (bez ponovne autentifikacije): '{text}'")
+                    self.pn532.SAM_configuration()  # Pozovi ovo posle svakog čitanja ili upisa
+                    time.sleep(0.2)  # Duža pauza
                     return text
             except:
                 pass
@@ -252,8 +255,8 @@ class SimpleNFCReader:
             # Upis podataka
             self.pn532.mifare_classic_write_block(block, block_data)
             self.logger.info(f"Blok {block} upisan: '{data[:16]}'")
-            time.sleep(0.2)  # Pauza za stabilnost
-            
+            self.pn532.SAM_configuration()  # Pozovi ovo posle svakog čitanja ili upisa
+            time.sleep(0.2)  # Duža pauza
             # Verifikacija upisa
             verification = self.read_block(uid, block)
             if verification and verification.strip() == data.strip():
