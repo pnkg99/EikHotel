@@ -137,7 +137,7 @@ class SimpleNFCReader:
             uid_list = [b for b in uid]  # PN532 traži listu intova
 
             # Autentifikacija
-            if not self.pn532.mifare_classic_authenticate_block(uid_list, block, PN532.MIFARE_CMD_AUTH_A, key):
+            if not self.authenticate_block(uid, block):# self.pn532.mifare_classic_authenticate_block(uid_list, block, MIFARE_CMD_AUTH_A, key):
                 self.logger.error(f"Autentifikacija neuspešna za blok {block} (key={key.hex()})")
                 return None
 
