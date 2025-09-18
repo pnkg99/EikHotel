@@ -18,7 +18,7 @@ class SimpleNFCReader:
         self.on_card_read = on_card_read
         self.pn532 = None
         self.is_running = False
-        self.default_key = [0xFF] * 6  # Default MIFARE ključ
+        self.default_key = bytes([0xFF] * 6)  # Define as bytes instead of a list# Default MIFARE ključ
         
         # Setup logging
         logging.basicConfig(level=logging.INFO, 
