@@ -110,7 +110,7 @@ class ScreenManager(QStackedWidget):
             print(f"Token pročitan: {self.token}")
             print(f"CVC pročitan: {self.token}")
             if self.token and self.cvc:
-                resp = read_nfc_card(self.token, self.cvs)
+                resp = read_nfc_card(self.token, self.cvc)
                 print(f"Web response: {resp}")
                 
                 if resp:
