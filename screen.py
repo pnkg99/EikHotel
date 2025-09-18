@@ -3,7 +3,6 @@ from PyQt5.QtCore import QThread, QObject, pyqtSignal, QTimer
 from services.pn532 import SimpleNFCReader
 from services.web import read_nfc_card, get_card_history, enter_restaurant, enter_gym
 import time
-import random
 
 class NFCPollingThread(QThread):
     """Thread za NFC polling koji je kompatibilan sa PyQt5"""
@@ -59,7 +58,6 @@ class ScreenManager(QStackedWidget):
         self.nfc_thread = NFCPollingThread(self.nfc_reader)
         self.nfc_thread.card_detected.connect(self._handle_read_card)
         
-        self.pin = "123456"
         self.token = None
         self.uid = None
         self.cvc = None

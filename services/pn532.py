@@ -131,30 +131,30 @@ class SimpleNFCReader:
             self.logger.error(f"Greška pri autentifikaciji bloka {block}: {e}")
             return False
     
-    def read_block(self, uid: bytes, block: int) :
-        """
-        Čita podatke iz bloka
-        :param uid: UID kartice
-        :param block: Broj bloka
-        :return: String podataka ili None
-        """
+    def read_block(self, uid: bytes, block: int, key: bytes = b"\xFF\xFF\xFF\xFF\xFF\xFF"):
         try:
-            
+            uid_list = [b for b in uid]  # PN532 traži listu intova
+
+            # Autentifikacija
+            if not self.pn532.mifare_classic_authenticate_block(uid_list, block, PN532.MIFARE_CMD_AUTH_A, key):
+                self.logger.error(f"Autentifikacija neuspešna za blok {block} (key={key.hex()})")
+                return None
+
             # Čitaj podatke
             data = self.pn532.mifare_classic_read_block(block)
             if not data:
                 self.logger.error(f"Čitanje bloka {block} neuspešno")
                 return None
-            
-            # Konvertuj u string (ukloni padding)
-            text = ''.join(chr(b) for b in data if 32 <= b <= 126).rstrip('\x00')
+
+            # Konverzija u string
+            text = bytes(data).rstrip(b"\x00").decode("utf-8", errors="ignore")
             self.logger.info(f"Blok {block} pročitan: '{text}'")
             return text
-            
+
         except Exception as e:
             self.logger.error(f"Greška pri čitanju bloka {block}: {e}")
             return None
-    
+
     def write_block(self, uid: bytes, block: int, data: str):
         try:          
             # Pripremi podatke (16 bajtova sa padding)
