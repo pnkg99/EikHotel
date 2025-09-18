@@ -131,7 +131,7 @@ class SimpleNFCReader:
             self.logger.error(f"Greška pri autentifikaciji bloka {block}: {e}")
             return False
     
-    def read_block(self, uid: bytes, block: int) -> Optional[str]:
+    def read_block(self, uid: bytes, block: int) :
         """
         Čita podatke iz bloka
         :param uid: UID kartice
@@ -139,10 +139,6 @@ class SimpleNFCReader:
         :return: String podataka ili None
         """
         try:
-            # Autentifikuj blok
-            if not self.authenticate_block(uid, block):
-                self.logger.error(f"Autentifikacija bloka {block} neuspešna")
-                return None
             
             # Čitaj podatke
             data = self.pn532.mifare_classic_read_block(block)
