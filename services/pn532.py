@@ -117,8 +117,8 @@ class SimpleNFCReader:
     
     def authenticate_block(self, uid: bytes, block: int):
         try:
-            if self.pn532.mifare_classic_authenticate_block(uid, block, MIFARE_CMD_AUTH_A, self.default_key):
-                return True
+            # if self.pn532.mifare_classic_authenticate_block(uid, block, MIFARE_CMD_AUTH_A, self.default_key):
+            #     return True
             if self.pn532.mifare_classic_authenticate_block(uid, block, MIFARE_CMD_AUTH_B, self.default_key):
                 return True
             return False
