@@ -127,13 +127,11 @@ class SimpleNFCReader:
             return False
 
     
-    def read_block(self, uid: bytes, block: int, key: bytes = b"\xFF\xFF\xFF\xFF\xFF\xFF"):
+    def read_block(self, uid: bytes, block: int):
         try:
-            uid_list = [b for b in uid]  # PN532 traži listu intova
-
             # Autentifikacija
             if not self.authenticate_block(uid, block):
-                self.logger.error(f"Autentifikacija neuspešna za blok {block} (key={key.hex()})")
+                self.logger.error(f"Autentifikacija neuspešna za blok {block} (key={self.default_key.hex()})")
                 return None
 
             # Čitaj podatke
@@ -167,72 +165,3 @@ class SimpleNFCReader:
         except Exception as e:
             self.logger.error(f"Greška pri upisu u blok {block}: {e}")
             return False
-
-    def read_write_demo(self, block: int = 6):
-        """
-        Demo funkcija koja čeka karticu i demonstrira čitanje/pisanje
-        :param block: Blok za testiranje (default 6)
-        """
-        print(f"\nDemo čitanje/pisanje bloka {block}")
-        print("Postavite karticu na čitač...")
-        
-        while True:
-            try:
-                uid = self.read_card_once(timeout=0.5)
-                if uid:
-                    uid_hex = ''.join(f"{b:02X}" for b in uid)
-                    print(f"\nKartica detektovana: {uid_hex}")
-                    
-                    # Čitaj postojeće podatke
-                    existing_data = self.read_block(uid, block)
-                    print(f"Postojeći podaci: '{existing_data}'")
-                    
-                    # Upiši nove podatke
-                    new_data = f"Test-{int(time.time())}"
-                    if self.write_block(uid, block, new_data):
-                        print(f"Upisano: '{new_data}'")
-                        
-                        # Verifikuj upis
-                        verified_data = self.read_block(uid, block)
-                        print(f"Verifikacija: '{verified_data}'")
-                        
-                        if verified_data == new_data:
-                            print("✓ Upis uspešan!")
-                        else:
-                            print("✗ Greška pri verifikaciji")
-                    
-                    print("\nUklonite karticu i postavite drugu za novi test...")
-                    
-                    # Čekaj da se kartica ukloni
-                    while self.read_card_once(timeout=0.1):
-                        time.sleep(0.1)
-                    
-                    print("Kartica uklonjena. Postavite sledeću...")
-                
-            except KeyboardInterrupt:
-                print("\nDemo završen!")
-                break
-            except Exception as e:
-                self.logger.error(f"Greška tokom demo: {e}")
-                time.sleep(1)
-
-# Primer korišćenja
-if __name__ == "__main__":
-    def card_detected(uid):
-        uid_hex = ''.join(f"{b:02X}" for b in uid)
-        print(f"Callback: Kartica {uid_hex} detektovana!")
-    
-    # Kreiraj čitač
-    reader = SimpleNFCReader(on_card_read=card_detected)
-    
-    try:
-        # Pokretni demo
-        reader.read_write_demo()
-        
-        # Ili pokreni kontinuirani polling
-        # reader.start_polling(check_interval=0.3)
-        
-    except KeyboardInterrupt:
-        print("Program završen!")
-    finally:
-        reader.stop_polling()

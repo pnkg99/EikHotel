@@ -132,14 +132,14 @@ class SecondScreen(DefaultScreen):
         if self.current_keyboard_input:
             self.current_keyboard_input.hide_keyboard()
             
-        randint = random.randint(1, 1000000000)
-        randint2 = random.randint(1, 1000000000)
+        randint = str(random.randint(1, 1000000000))
+        randint2 = str(random.randint(1, 1000000000))
         self.parent_window.screen_manager.token = randint
-        print(self.parent_window.screen_manager.last_uid, 6, randint)
-        out = self.parent_window.screen_manager.nfc_reader.write_block(self.parent_window.screen_manager.last_uid, 6, str(randint))
-        out2 = self.parent_window.screen_manager.nfc_reader.write_block(self.parent_window.screen_manager.last_uid, 7, str(randint2))
+        self.parent_window.screen_manager.cvc = randint2  
+        out = self.parent_window.screen_manager.nfc_reader.write_block(self.parent_window.screen_manager.last_uid, 12, randint)
+        out2 = self.parent_window.screen_manager.nfc_reader.write_block(self.parent_window.screen_manager.last_uid, 13, randint2)
         if out and out2 :
-            register = register_guest(room_number, name, self.parent_window.screen_manager.last_uid, str(randint), str(randint2))
+            register = register_guest(room_number, name, self.parent_window.screen_manager.last_uid, randint, randint2)
             if register :            
                 # Prikaz custom modala
                 modal = CustomModal("Uspešno ste dodali gosta".upper(), "notification", "success")

@@ -61,6 +61,8 @@ class ScreenManager(QStackedWidget):
         self.token = None
         self.uid = None
         self.cvc = None
+        self.token_block_number = 12
+        self.cvc_block_number = 13
 
         self.card_active = False  
         self.restaurant_entered = False
@@ -103,8 +105,8 @@ class ScreenManager(QStackedWidget):
             print(f"Kartica detektovana: {uid_hex}")
             self.last_uid = uid_hex
             # Čitaj token iz bloka 6
-            self.token = self.nfc_reader.read_block(uid, 6)
-            self.cvc = self.nfc_reader.read_block(uid, 7)
+            self.token = self.nfc_reader.read_block(uid, self.token_block_number)
+            self.cvc = self.nfc_reader.read_block(uid, self.cvc_block_number)
             print(f"Token pročitan: {self.token}")
             print(f"CVC pročitan: {self.token}")
             if self.token and self.cvc:
@@ -202,39 +204,6 @@ class ScreenManager(QStackedWidget):
             self.nfc_thread.stop()
         else:
             print("NFC polling nije pokrenut")
-
-    def write_token_to_card(self, token: str, timeout: float = 5.0) -> bool:
-        """
-        Upisuje token u karticu koja se trenutno drži na čitaču
-        :param token: Token za upis
-        :param timeout: Maksimalno vreme čekanja kartice
-        :return: True ako je upis uspešan
-        """
-        print(f"Čekam karticu za upis tokena: {token}")
-        
-        start_time = time.time()
-        while time.time() - start_time < timeout:
-            try:
-                uid = self.nfc_reader.read_card_once(timeout=0.5)
-                if uid:
-                    uid_hex = ''.join(f"{b:02X}" for b in uid)
-                    print(f"Kartica za upis detektovana: {uid_hex}")
-                    
-                    # Pokušaj upis
-                    if self.nfc_reader.write_block(uid, 6, token):
-                        print(f"Token '{token}' uspešno upisan!")
-                        return True
-                    else:
-                        print("Greška pri upisu tokena")
-                        return False
-                        
-            except Exception as e:
-                print(f"Greška pri upisu: {e}")
-                
-            time.sleep(0.1)
-        
-        print("Timeout - kartica nije detektovana za upis")
-        return False
 
     def closeEvent(self, event):
         """Cleanup pri zatvaranju aplikacije"""
