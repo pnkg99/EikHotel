@@ -40,6 +40,7 @@ class SimpleNFCReader:
             i2c = busio.I2C(board.SCL, board.SDA)
             self.pn532 = PN532_I2C(i2c, debug=False)
             self.pn532.SAM_configuration()
+            time.sleep(0.2)
             
             # Proveri firmware
             ic, ver, rev, support = self.pn532.firmware_version
@@ -171,29 +172,21 @@ class SimpleNFCReader:
     def read_block(self, uid: bytes, block: int):
         """Čitanje bloka inspirisano starim kodom"""
         try:
-            if block % 4 == 3:
-                self.logger.error(f"Blok {block} je sector trailer - koristi read_sector_trailer!")
-                return None
-            
-            # Autentifikuj
-            if not self.authenticate_block(uid, block):
-                self.logger.error(f"Autentifikacija neuspešna za blok {block}")
-                return None
-            
-            # Čitaj
-            time.sleep(0.2)  # Pauza za stabilnost
-            data = self.pn532.mifare_classic_read_block(block)
-            if not data:
-                self.logger.error(f"Čitanje bloka {block} neuspešno")
-                return None
-            
-            # Dekodiranje kao u starom kodu
-            result = ''.join(chr(b) for b in data if 32 <= b <= 126).rstrip('\x00')
-            self.logger.info(f"Blok {block} pročitan: '{result}'")
-            # Resetuj SAM nakon čitanja
-            self.pn532.SAM_configuration()
-            time.sleep(0.2)
-            return result
+            # Čitanje nazad
+            for block in blocks:
+                # Ponovo autentifikuj ako treba
+                if not self.authenticate_block(block):
+                    trailer_block = (block // 4) * 4 + 3
+                    self.authenticate_block(trailer_block)
+                
+                data = self.pn532.mifare_classic_read_block(block)
+                if data:
+                    text = bytes(data).rstrip(b"\x00").decode("utf-8", errors="ignore")
+                    print(f"Pročitano iz bloka {block}: {text}")
+                else:
+                    print(f"Čitanje bloka {block} neuspešno!")
+
+            print("Završeno!")
         
         except Exception as e:
             self.logger.error(f"Greška pri čitanju bloka {block}: {str(e)}")
@@ -202,35 +195,42 @@ class SimpleNFCReader:
     def write_block(self, uid: bytes, block: int, data: str):
         """Upisivanje u blok inspirisano starim kodom"""
         try:
-            if block % 4 == 3:
-                self.logger.error(f"Blok {block} je sector trailer - upis nije dozvoljen!")
-                return False
-            
-            # Autentifikuj
-            if not self.authenticate_block(uid, block):
-                self.logger.error(f"Autentifikacija neuspešna za blok {block}")
-                return False
-            
-            # Pripremi podatke kao u starom kodu
-            block_data = list(data.encode('utf-8'))
-            if len(block_data) < 16:
-                block_data += [0x00] * (16 - len(block_data))
-            elif len(block_data) > 16:
-                block_data = block_data[:16]
-            
-            # Upis
-            self.pn532.mifare_classic_write_block(block, block_data)
-            self.logger.info(f"Blok {block} upisan: '{data[:16]}'")
-            time.sleep(0.2)  # Pauza za stabilnost
-            
-            # Verifikacija
-            verification = self.read_block(uid, block)
-            if verification and verification.strip() == data.strip():
-                self.logger.info(f"Verifikacija uspešna za blok {block}")
-                return True
-            else:
-                self.logger.warning(f"Verifikacija neuspešna za blok {block}")
-                return False
+            # Funkcija za autentifikaciju bloka
+            def authenticate(block):
+                if self.pn532.mifare_classic_authenticate_block(uid, block, MIFARE_CMD_AUTH_A, self.default_key):
+                    print(f"Autentifikacija uspešna za blok {block}")
+                    self.pn532.SAM_configuration()
+                    time.sleep(0.2)
+                    return True
+                else:
+                    print(f"Autentifikacija neuspešna za blok {block}! Proveri ključ.")
+                    self.pn532.SAM_configuration()
+                    time.sleep(0.2)
+                    return False
+
+            # Blokovi za upis/čitanje
+            blocks = [12, 13]
+            data_to_write = "12345"  # Promeni ovo u broj koji želiš (do 16 bajtova)
+
+            for block in blocks:
+                # Autentifikuj
+                self.pn532.SAM_configuration()
+                time.sleep(0.2)
+                if not authenticate(block):
+                    # Ako ne uspe, probaj preko sector trailer-a (za sektor 3 to je blok 15)
+                    trailer_block = (block // 4) * 4 + 3
+                    if not authenticate(trailer_block):
+                        print("Nemoguća autentifikacija! Kraj.")
+                        exit()
+                
+                # Pripremi podatke za upis (popuni do 16 bajtova sa 0x00)
+                block_data = list(data_to_write.encode('utf-8')) + [0x00] * (16 - len(data_to_write.encode('utf-8')))
+                
+                # Upis
+                self.pn532.mifare_classic_write_block(block, block_data)
+                print(f"Upisano u blok {block}: {data_to_write}")
+                self.pn532.SAM_configuration()
+                time.sleep(0.2)  # Pauza za stabilnost
         
         except Exception as e:
             self.logger.error(f"Greška pri upisu u blok {block}: {str(e)}")
