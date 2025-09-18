@@ -24,7 +24,6 @@ class SimpleNFCReader:
             bytes([0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5]),  # MAD ključ
             bytes([0xD3, 0xF7, 0xD3, 0xF7, 0xD3, 0xF7]),  # NFC Forum ključ
         ]
-        self.last_successful_key = {}  # Keš za uspešne ključeve po sektoru
         
         # Setup logging
         logging.basicConfig(level=logging.INFO, 
@@ -79,6 +78,8 @@ class SimpleNFCReader:
                         if self.on_card_read:
                             self.on_card_read(uid)
                         last_uid = uid_hex
+                    # Resetuj SAM nakon čitanja UID-a
+                    self.pn532.SAM_configuration()
                 else:
                     # Resetuj UID ako nema kartice
                     if last_uid is not None:
@@ -113,7 +114,10 @@ class SimpleNFCReader:
             uid = self.pn532.read_passive_target(timeout=timeout)
             if uid:
                 uid_hex = ''.join(f"{b:02X}" for b in uid)
-                self.logger.info(f"Kartica detektovana: {uid_hex}")
+                self.logger.info(f"Kartica detektovana: {uid_hex} (dužina UID-a: {len(uid)} bajta)")
+                # Resetuj SAM nakon čitanja
+                self.pn532.SAM_configuration()
+                time.sleep(0.2)
             return uid
         except Exception as e:
             self.logger.error(f"Greška pri čitanju: {e}")
@@ -125,136 +129,101 @@ class SimpleNFCReader:
         return sector * 4 + 3
 
     def authenticate_block(self, uid: bytes, block: int):
-        """Autentifikacija bloka sa keširanjem ključeva"""
-        sector = block // 4
-        # Proveri keširani ključ za sektor
-        if sector in self.last_successful_key:
-            key, auth_cmd = self.last_successful_key[sector]
-            try:
-                if self.pn532.mifare_classic_authenticate_block(uid, block, auth_cmd, key):
-                    self.logger.info(f"Autentifikacija uspešna za blok {block} sa keširanim ključem {key.hex()}")
-                    return True
-            except Exception as e:
-                self.logger.debug(f"Keširani ključ neuspešan za blok {block}: {e}")
-        
-        # Pokušaj default ključ sa AUTH_A prvo (jer je kartica formatirana)
+        """Autentifikacija bloka inspirisana starim kodom"""
         try:
-            if self.pn532.mifare_classic_authenticate_block(uid, block, MIFARE_CMD_AUTH_A, self.default_key):
-                self.logger.info(f"Autentifikacija uspešna za blok {block} sa default ključem {self.default_key.hex()}")
-                self.last_successful_key[sector] = (self.default_key, MIFARE_CMD_AUTH_A)
+            # Prvo pokušaj AUTH_B sa default ključem (kao stari kod)
+            if self.pn532.mifare_classic_authenticate_block(uid, block, MIFARE_CMD_AUTH_B, self.default_key):
+                self.logger.info(f"Autentifikacija uspešna za blok {block} sa default ključem (AUTH_B)")
                 return True
-        except Exception as e:
-            self.logger.debug(f"Default ključ neuspešan za blok {block}: {e}")
-        
-        # Pokušaj preko sector trailer-a
-        trailer_block = self.get_sector_trailer_block(block)
-        if block != trailer_block:
-            try:
-                if self.pn532.mifare_classic_authenticate_block(uid, trailer_block, MIFARE_CMD_AUTH_A, self.default_key):
-                    self.logger.info(f"Autentifikacija uspešna preko trailer bloka {trailer_block} za blok {block}")
-                    self.last_successful_key[sector] = (self.default_key, MIFARE_CMD_AUTH_A)
+            
+            # Ako ne uspe, pokušaj AUTH_A sa default ključem
+            if self.pn532.mifare_classic_authenticate_block(uid, block, MIFARE_CMD_AUTH_A, self.default_key):
+                self.logger.info(f"Autentifikacija uspešna za blok {block} sa default ključem (AUTH_A)")
+                return True
+            
+            # Pokušaj preko sector trailer-a
+            trailer_block = self.get_sector_trailer_block(block)
+            if block != trailer_block:
+                if self.pn532.mifare_classic_authenticate_block(uid, trailer_block, MIFARE_CMD_AUTH_B, self.default_key):
+                    self.logger.info(f"Autentifikacija uspešna preko trailer bloka {trailer_block} (AUTH_B)")
                     return True
-            except Exception as e:
-                self.logger.debug(f"Trailer autentifikacija neuspešna za blok {trailer_block}: {e}")
-        
-        # Pokušaj alternativne ključeve
-        keys_to_try = self.alternative_keys
-        auth_commands = [MIFARE_CMD_AUTH_A, MIFARE_CMD_AUTH_B]
-        
-        for key in keys_to_try:
-            for auth_cmd in auth_commands:
-                try:
-                    self.logger.debug(f"Pokušavam autentifikaciju bloka {block} sa ključem {key.hex()} i komandom {auth_cmd}")
-                    if self.pn532.mifare_classic_authenticate_block(uid, block, auth_cmd, key):
-                        self.logger.info(f"Autentifikacija uspešna za blok {block} sa ključem {key.hex()}")
-                        self.last_successful_key[sector] = (key, auth_cmd)
-                        return True
-                except Exception as e:
-                    self.logger.debug(f"Autentifikacija neuspešna za blok {block}: {e}")
-                    continue
-        
-        self.logger.error(f"Sve autentifikacije neuspešne za blok {block}")
-        return False
+                if self.pn532.mifare_classic_authenticate_block(uid, trailer_block, MIFARE_CMD_AUTH_A, self.default_key):
+                    self.logger.info(f"Autentifikacija uspešna preko trailer bloka {trailer_block} (AUTH_A)")
+                    return True
+            
+            # Pokušaj alternativne ključeve
+            for key in self.alternative_keys:
+                for auth_cmd in [MIFARE_CMD_AUTH_B, MIFARE_CMD_AUTH_A]:
+                    try:
+                        if self.pn532.mifare_classic_authenticate_block(uid, block, auth_cmd, key):
+                            self.logger.info(f"Autentifikacija uspešna za blok {block} sa ključem {key.hex()} ({auth_cmd})")
+                            return True
+                    except Exception as e:
+                        self.logger.debug(f"Autentifikacija neuspešna za blok {block} sa ključem {key.hex()}: {e}")
+                        continue
+            
+            self.logger.error(f"Sve autentifikacije neuspešne za blok {block}")
+            return False
+        except Exception as e:
+            self.logger.error(f"Greška pri autentifikaciji bloka {block}: {str(e)}")
+            return False
 
     def read_block(self, uid: bytes, block: int):
-        """Čitanje bloka sa proverom access bits-a"""
+        """Čitanje bloka inspirisano starim kodom"""
         try:
-            # Proveri da li je blok sector trailer
             if block % 4 == 3:
                 self.logger.error(f"Blok {block} je sector trailer - koristi read_sector_trailer!")
                 return None
             
-            # Proveri access bits pre čitanja
-            trailer_block = self.get_sector_trailer_block(block)
-            trailer_data = self.read_sector_trailer(uid, block // 4)
-            if trailer_data:
-                access_bits = trailer_data[6:10]
-                expected_access_bits = bytes([0xFF, 0x07, 0x80, 0x69])
-                if access_bits != expected_access_bits:
-                    self.logger.warning(f"Nestandardni access bits u sektoru {block // 4}: {access_bits.hex()}")
-            
-            # Pokušaj čitanje bez ponovne autentifikacije
-            try:
-                data = self.pn532.mifare_classic_read_block(block)
-                if data:
-                    text = bytes(data).rstrip(b"\x00").decode("utf-8", errors="ignore")
-                    self.logger.info(f"Blok {block} pročitan (bez ponovne autentifikacije): '{text}'")
-                    return text
-            except:
-                pass
-            
-            # Autentifikuj ako je potrebno
+            # Autentifikuj
             if not self.authenticate_block(uid, block):
                 self.logger.error(f"Autentifikacija neuspešna za blok {block}")
                 return None
             
-            # Čitaj podatke
+            # Čitaj
             time.sleep(0.2)  # Pauza za stabilnost
             data = self.pn532.mifare_classic_read_block(block)
             if not data:
                 self.logger.error(f"Čitanje bloka {block} neuspešno")
                 return None
             
-            text = bytes(data).rstrip(b"\x00").decode("utf-8", errors="ignore")
-            self.logger.info(f"Blok {block} pročitan: '{text}'")
-            return text
+            # Dekodiranje kao u starom kodu
+            result = ''.join(chr(b) for b in data if 32 <= b <= 126).rstrip('\x00')
+            self.logger.info(f"Blok {block} pročitan: '{result}'")
+            # Resetuj SAM nakon čitanja
+            self.pn532.SAM_configuration()
+            time.sleep(0.2)
+            return result
         
         except Exception as e:
             self.logger.error(f"Greška pri čitanju bloka {block}: {str(e)}")
             return None
 
     def write_block(self, uid: bytes, block: int, data: str):
-        """Upisivanje u blok sa proverom access bits-a"""
+        """Upisivanje u blok inspirisano starim kodom"""
         try:
-            # Proveri da li je blok sector trailer
             if block % 4 == 3:
                 self.logger.error(f"Blok {block} je sector trailer - upis nije dozvoljen!")
                 return False
-            
-            # Proveri access bits pre upisa
-            trailer_block = self.get_sector_trailer_block(block)
-            trailer_data = self.read_sector_trailer(uid, block // 4)
-            if trailer_data:
-                access_bits = trailer_data[6:10]
-                expected_access_bits = bytes([0xFF, 0x07, 0x80, 0x69])
-                if access_bits != expected_access_bits:
-                    self.logger.warning(f"Nestandardni access bits u sektoru {block // 4}: {access_bits.hex()}. Upis možda neće raditi.")
             
             # Autentifikuj
             if not self.authenticate_block(uid, block):
                 self.logger.error(f"Autentifikacija neuspešna za blok {block}")
                 return False
             
-            # Pripremi podatke za upis
-            block_data = list(data.encode('utf-8'))[:16]
-            block_data += [0x00] * (16 - len(block_data))
+            # Pripremi podatke kao u starom kodu
+            block_data = list(data.encode('utf-8'))
+            if len(block_data) < 16:
+                block_data += [0x00] * (16 - len(block_data))
+            elif len(block_data) > 16:
+                block_data = block_data[:16]
             
-            # Upis podataka
+            # Upis
             self.pn532.mifare_classic_write_block(block, block_data)
             self.logger.info(f"Blok {block} upisan: '{data[:16]}'")
             time.sleep(0.2)  # Pauza za stabilnost
             
-            # Verifikacija upisa
+            # Verifikacija
             verification = self.read_block(uid, block)
             if verification and verification.strip() == data.strip():
                 self.logger.info(f"Verifikacija uspešna za blok {block}")
@@ -266,7 +235,7 @@ class SimpleNFCReader:
         except Exception as e:
             self.logger.error(f"Greška pri upisu u blok {block}: {str(e)}")
             return False
-    
+
     def format_card_sector(self, uid: bytes, sector: int):   
         """Formatira sektor sa default ključevima (OPASNO!)"""
         try:
@@ -305,12 +274,12 @@ if __name__ == "__main__":
     nfc = SimpleNFCReader(on_card_read=on_card_read)
     
     # Čekaj karticu
-    uid = nfc.read_card_once(timeout=5.0)
+    uid = nfc.read_card_once(timeout=10.0)
     if not uid:
         print("Nema kartice!")
         exit()
     
-    # Pročitaj sector trailer sektora 3 (blokovi 12 i 13)
+    # Pročitaj sector trailer sektora 3 (blok 15)
     nfc.read_sector_trailer(uid, 3)
     
     # Upis i čitanje blokova 12 i 13
