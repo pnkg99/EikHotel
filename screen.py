@@ -109,7 +109,7 @@ class ScreenManager(QStackedWidget):
             print(f"Token pročitan: {self.token}")
             
             if self.token:
-                cvs = random.randint(1, 1000000000)
+                cvs = random.randint(10000000, 99999999)
                 resp = read_nfc_card(self.token, cvs)
                 print(f"Web response: {resp}")
                 
