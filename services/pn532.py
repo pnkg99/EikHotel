@@ -228,7 +228,7 @@ class SimpleNFCReader:
             self.logger.error(f"Greška pri upisu u blok {block}: {e}")
             return False
 
-    def format_card_sector(self, uid: bytes, sector: int):
+    def format_card_sector(self, uid: bytes, sector: int):   
         """Formatira sektor sa default ključevima (OPASNO!)"""
         try:
             trailer_block = sector * 4 + 3
@@ -248,3 +248,15 @@ class SimpleNFCReader:
             self.logger.error(f"Greška pri formatiranju sektora {sector}: {e}")
             
         return False
+
+    def read_sector_trailer(self, uid: bytes, sector: int):
+        trailer_block = sector * 4 + 3
+        if self.authenticate_block(uid, trailer_block):
+            data = self.pn532.mifare_classic_read_block(trailer_block)
+            if data:
+                key_a = data[0:6]
+                access_bits = data[6:10]
+                key_b = data[10:16]
+                self.logger.info(f"Sector {sector} trailer: KeyA={key_a.hex()}, AccessBits={access_bits.hex()}, KeyB={key_b.hex()}")
+                return data
+        return None
