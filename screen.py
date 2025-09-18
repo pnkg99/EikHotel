@@ -106,11 +106,11 @@ class ScreenManager(QStackedWidget):
             self.last_uid = uid_hex
             # Čitaj token iz bloka 6
             self.token = self.nfc_reader.read_block(uid, 6)
+            self.cvc = self.nfc_reader.read_block(uid, 7)
             print(f"Token pročitan: {self.token}")
-            
-            if self.token:
-                cvs = random.randint(10000000, 99999999)
-                resp = read_nfc_card(self.token, cvs)
+            print(f"CVC pročitan: {self.token}")
+            if self.token and self.cvc:
+                resp = read_nfc_card(self.token, self.cvs)
                 print(f"Web response: {resp}")
                 
                 if resp:
