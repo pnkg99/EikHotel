@@ -5,7 +5,8 @@ import board
 import busio
 from digitalio import DigitalInOut
 from adafruit_pn532.i2c import PN532_I2C
-from adafruit_pn532.adafruit_pn532 import MIFARE_CMD_AUTH_B
+from adafruit_pn532 import PN532
+from adafruit_pn532.adafruit_pn532 import MIFARE_CMD_AUTH_B, MIFARE_CMD_AUTH_A
 
 class SimpleNFCReader:
     """
