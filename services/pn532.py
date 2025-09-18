@@ -18,12 +18,11 @@ class SimpleNFCReader:
         self.on_card_read = on_card_read
         self.pn532 = None
         self.is_running = False
-        self.default_key = bytes([0xFF] * 6)  # Default MIFARE ključ
-        # Alternativni ključevi koje možete probati
+        self.default_key = bytes([0x00] * 6)  # Probajmo null ključ umesto FF
+        # Alternativni ključevi
         self.alternative_keys = [
-            bytes([0x00] * 6),  # Null ključ
+            bytes([0xFF] * 6),  # Default MIFARE ključ
             bytes([0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5]),  # MAD ključ
-            bytes([0xD3, 0xF7, 0xD3, 0xF7, 0xD3, 0xF7]),  # NFC Forum ključ
         ]
         
         # Setup logging
@@ -121,27 +120,29 @@ class SimpleNFCReader:
             return None
     
     def authenticate_block(self, uid: bytes, block: int):
-        """Poboljšana autentifikacija koja pokušava više ključeva"""
-        # Lista ključeva za pokušaj
-        keys_to_try = [self.default_key] + self.alternative_keys
-        
-        # Lista komandi za autentifikaciju
-        auth_commands = [MIFARE_CMD_AUTH_A, MIFARE_CMD_AUTH_B]
+        """Jednostavna autentifikacija - probaj osnovne ključeve"""
+        # Osnovni ključevi za pokušaj
+        keys_to_try = [
+            bytes([0x00] * 6),  # 000000000000
+            bytes([0xFF] * 6),  # FFFFFFFFFFFF
+        ]
         
         for key in keys_to_try:
-            for auth_cmd in auth_commands:
-                try:
-                    self.logger.debug(f"Pokušavam autentifikaciju bloka {block} sa ključem {key.hex()} i komandom {auth_cmd}")
+            try:
+                # Probaj prvo Auth A
+                if self.pn532.mifare_classic_authenticate_block(uid, block, MIFARE_CMD_AUTH_A, key):
+                    self.logger.info(f"Autentifikacija uspešna za blok {block} sa ključem {key.hex()} (Auth A)")
+                    return True
                     
-                    if self.pn532.mifare_classic_authenticate_block(uid, block, auth_cmd, key):
-                        self.logger.info(f"Autentifikacija uspešna za blok {block} sa ključem {key.hex()}")
-                        return True
+                # Zatim probaj Auth B
+                if self.pn532.mifare_classic_authenticate_block(uid, block, MIFARE_CMD_AUTH_B, key):
+                    self.logger.info(f"Autentifikacija uspešna za blok {block} sa ključem {key.hex()} (Auth B)")
+                    return True
                         
-                except Exception as e:
-                    self.logger.debug(f"Autentifikacija neuspešna za blok {block}: {e}")
-                    continue
+            except Exception as e:
+                continue
         
-        self.logger.error(f"Sve autentifikacije neuspešne za blok {block}")
+        self.logger.error(f"Autentifikacija neuspešna za blok {block}")
         return False
 
     def get_sector_trailer_block(self, block: int):
@@ -150,28 +151,12 @@ class SimpleNFCReader:
         return sector * 4 + 3
 
     def read_block(self, uid: bytes, block: int):
-        """Poboljšano čitanje bloka"""
+        """Jednostavno čitanje bloka"""
         try:
-            # Prvo pokušaj da čitaš bez ponovne autentifikacije
-            # ako je prethodna bila uspešna
-            try:
-                data = self.pn532.mifare_classic_read_block(block)
-                if data:
-                    text = bytes(data).rstrip(b"\x00").decode("utf-8", errors="ignore")
-                    self.logger.info(f"Blok {block} pročitan (bez ponovne autentifikacije): '{text}'")
-                    return text
-            except:
-                pass  # Nastavi sa autentifikacijom
-
             # Autentifikacija
             if not self.authenticate_block(uid, block):
-                # Pokušaj autentifikaciju preko sector trailer-a
-                trailer_block = self.get_sector_trailer_block(block)
-                self.logger.info(f"Pokušavam autentifikaciju preko trailer bloka {trailer_block}")
-                
-                if not self.authenticate_block(uid, trailer_block):
-                    self.logger.error(f"Autentifikacija neuspešna za blok {block}")
-                    return None
+                self.logger.error(f"Autentifikacija neuspešna za blok {block}")
+                return None
 
             # Čitaj podatke
             data = self.pn532.mifare_classic_read_block(block)
@@ -189,7 +174,7 @@ class SimpleNFCReader:
             return None
 
     def write_block(self, uid: bytes, block: int, data: str):
-        """Poboljšan upis u blok"""
+        """Jednostavan upis u blok"""
         try:
             # Proveri da li je blok sector trailer (ne sme se pisati)
             if block % 4 == 3:
@@ -198,13 +183,8 @@ class SimpleNFCReader:
 
             # Autentifikacija
             if not self.authenticate_block(uid, block):
-                # Pokušaj autentifikaciju preko sector trailer-a
-                trailer_block = self.get_sector_trailer_block(block)
-                self.logger.info(f"Pokušavam autentifikaciju preko trailer bloka {trailer_block}")
-                
-                if not self.authenticate_block(uid, trailer_block):
-                    self.logger.error(f"Autentifikacija neuspešna za blok {block}")
-                    return False
+                self.logger.error(f"Autentifikacija neuspešna za blok {block}")
+                return False
 
             # Pripremi podatke za upis
             block_data = list(data.encode('utf-8'))[:16]
@@ -213,16 +193,7 @@ class SimpleNFCReader:
             # Upis podataka
             self.pn532.mifare_classic_write_block(block, block_data)
             self.logger.info(f"Blok {block} upisan: '{data[:16]}'")
-            
-            # Verifikacija upisa
-            time.sleep(0.1)  # Kratka pauza
-            verification = self.read_block(uid, block)
-            if verification and verification.strip() == data.strip():
-                self.logger.info(f"Verifikacija uspešna za blok {block}")
-                return True
-            else:
-                self.logger.warning(f"Verifikacija neuspešna za blok {block}")
-                return False
+            return True
 
         except Exception as e:
             self.logger.error(f"Greška pri upisu u blok {block}: {e}")
