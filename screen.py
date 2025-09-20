@@ -141,6 +141,7 @@ class ScreenManager(QStackedWidget):
             self.cvc = self.nfc_manager.read_block(self.nfc_manager.cvc_block_number)
             print(f"Token pročitan: {self.token}")
             print(f"CVC pročitan: {self.cvc}")
+            self.nfc_manager.stop_polling()
             if self.token and self.cvc:
                 resp = read_nfc_card(self.token, self.cvc)
                 print(f"Web response: {resp}")
@@ -154,6 +155,7 @@ class ScreenManager(QStackedWidget):
                         
                         if "restaurant" in self.screens and self.slug:
                             self.screens["restaurant"].update_slug(self.slug)
+                        
                         
                         self.show_screen("customer")
                         self.card_active = True
