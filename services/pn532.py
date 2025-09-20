@@ -125,18 +125,49 @@ class SimpleUltralightReader:
     def write_block(self, page: int, data: str):
         """Upisuje do 4 bajta na Ultralight stranicu"""
         try:
-            raw = list(data.encode("utf-8"))[:4]
-            raw += [0x00] * (4 - len(raw))
+            # Proveri da li je stranica dostupna za upis
+            if page < 4:
+                self.logger.error(f"Stranica {page} je rezervisana - ne može se pisati!")
+                return False
+                
+            if page > 15:
+                self.logger.error(f"Stranica {page} je van dosega Ultralight kartice!")
+                return False
             
-            # Koristi NTAG funkciju za Ultralight
+            # Pripremi podatke
+            raw_data = data.encode("utf-8")[:4]
+            raw = list(raw_data)
+            # Dopuni do 4 bajta sa 0x00
+            while len(raw) < 4:
+                raw.append(0x00)
+            
+            self.logger.info(f"Pokušavam upis na stranicu {page}: {raw} ('{data}')")
+            
+            # Prvo proverava da li kartica još uvek postoji
+            uid = self.pn532.read_passive_target(timeout=0.1)
+            if not uid:
+                self.logger.error("Kartica nije više u dosegu!")
+                return False
+            
+            # Pokušaj upis
             success = self.pn532.ntag2xx_write_block(page, raw)
             
             if success:
-                self.logger.info(f"Stranica {page} upisana: '{data}'")
-                return True
+                self.logger.info(f"Stranica {page} uspešno upisana: '{data}'")
+                
+                # Verifikuj upis čitanjem
+                time.sleep(0.1)  # Kratka pauza
+                verification = self.read_block(page)
+                if verification and verification.strip('\x00') == data:
+                    self.logger.info("Upis verifikovan!")
+                    return True
+                else:
+                    self.logger.warning(f"Upis možda nije uspešan - verifikacija: '{verification}'")
+                    return True  # Vraćamo True jer je write_block vratio success
             else:
-                self.logger.error(f"Upis stranice {page} neuspešan")
+                self.logger.error(f"ntag2xx_write_block vratio False za stranicu {page}")
                 return False
+                
         except Exception as e:
             self.logger.error(f"Greška pri upisu stranice {page}: {e}")
             return False
@@ -207,16 +238,34 @@ if __name__ == "__main__":
                 if data:
                     print(f"  Stranica {page}: '{data.strip()}'")
             
-            # Test upisa (pazi - ovo će prepisati podatke!)
+            # Test upisa sa detaljnim dijagnostikama
             test_write = input("\nDa li želiš testirati upis na stranicu 4? (y/N): ")
             if test_write.lower() == 'y':
+                
+                # Proveri zaštitu od upisa
+                print("Proveravam zaštitu kartice...")
+                is_protected = reader.check_card_write_protection()
+                
                 test_data = "TEST"
+                print(f"Pokušavam standardni upis: '{test_data}'")
+                
                 if reader.write_block(4, test_data):
-                    print(f"Uspešno upisano: '{test_data}'")
+                    print(f"✓ Uspešno upisano: '{test_data}'")
                     # Verifikuj upis
                     read_back = reader.read_block(4)
-                    print(f"Verifikacija: '{read_back.strip()}'")
-                    
+                    print(f"✓ Verifikacija: '{read_back.strip()}'")
+                else:
+                    print("✗ Standardni upis neuspešan, pokušavam alternativni...")
+                    if reader.try_alternative_write(4, test_data):
+                        read_back = reader.read_block(4)
+                        print(f"✓ Alternativni upis uspešan: '{read_back.strip()}'")
+                    else:
+                        print("✗ Svi pokušaji upisa neuspešni")
+                        print("Mogući uzroci:")
+                        print("  - Kartica je zaštićena od upisa")
+                        print("  - Kartica nije MIFARE Ultralight već drugi tip")
+                        print("  - Hardverski problem sa čitačem")
+                        print("  - Karticu pomeri ili je oštećena")
         else:
             print("Kartica nije detektovana")
             
