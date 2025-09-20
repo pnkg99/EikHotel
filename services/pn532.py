@@ -101,29 +101,30 @@ class SimpleUltralightReader:
             self.pn532._write_frame(frame)
             
             # Sačekaj kratko
-            time.sleep(0.01)
+            time.sleep(0.05)
             
-            # Čitaj odgovor - pokušaj sa različitim length parametrima
-            response = None
-            for length in [32, 64, 16, 8]:
-                try:
-                    response = self.pn532._read_frame(length=length)
-                    if response:
-                        self.logger.info(f"← Odgovor (len={length}): {[hex(x) for x in response]}")
-                        break
-                except:
-                    continue
+            # Čitaj odgovor - length je obavezni parametar
+            try:
+                response = self.pn532._read_frame(length=32)
+                if response:
+                    self.logger.info(f"← Odgovor (32B): {[hex(x) for x in response]}")
+                    return response
+            except Exception as e1:
+                self.logger.warning(f"_read_frame(32) neuspešan: {e1}")
+                
+                # Pokušaj sa različitim length vrednostima
+                for length in [16, 64, 8, 128]:
+                    try:
+                        response = self.pn532._read_frame(length=length)
+                        if response:
+                            self.logger.info(f"← Odgovor ({length}B): {[hex(x) for x in response]}")
+                            return response
+                    except Exception as e2:
+                        self.logger.debug(f"_read_frame({length}) neuspešan: {e2}")
+                        continue
             
-            if not response:
-                # Pokušaj bez length parametra
-                try:
-                    response = self.pn532._read_frame()
-                    if response:
-                        self.logger.info(f"← Odgovor (no len): {[hex(x) for x in response]}")
-                except Exception as e:
-                    self.logger.error(f"Greška pri čitanju frame-a: {e}")
-            
-            return response
+            self.logger.error("Svi pokušaji čitanja frame-a neuspešni")
+            return None
                 
         except Exception as e:
             self.logger.error(f"Greška pri slanju komande: {e}")
@@ -260,18 +261,20 @@ class SimpleUltralightReader:
                 try:
                     self.logger.info(f"Pokušavam: {desc}")
                     self.pn532._write_frame(cmd)
-                    time.sleep(0.02)
+                    time.sleep(0.05)
                     
-                    response = self.pn532._read_frame()
+                    # _read_frame zahteva length parametar
+                    response = self.pn532._read_frame(length=32)
                     if response:
                         self.logger.info(f"  ✓ Odgovor: {[hex(x) for x in response]}")
                         if len(response) >= 4:
                             # Pokušaj dekodovanje
                             for start in range(min(4, len(response))):
                                 data = response[start:start+4] if start+4 <= len(response) else response[start:]
-                                text = bytes(data).decode("utf-8", errors="ignore").strip('\x00')
-                                if text and text.isprintable():
-                                    self.logger.info(f"    Možda tekst od pozicije {start}: '{text}'")
+                                if len(data) > 0:
+                                    text = bytes(data).decode("utf-8", errors="ignore").strip('\x00')
+                                    if text and all(ord(c) < 127 for c in text):  # ASCII check
+                                        self.logger.info(f"    Možda tekst od pozicije {start}: '{text}'")
                     else:
                         self.logger.info(f"  ✗ Nema odgovora")
                         
@@ -283,7 +286,41 @@ class SimpleUltralightReader:
         except Exception as e:
             self.logger.error(f"Debug greška: {e}")
 
-    def try_ntag_fallback(self, page: int):
+    def try_high_level_read(self, page: int):
+        """Pokušaj čitanje sa high-level funkcijama"""
+        methods_to_try = [
+            ('ntag2xx_read_block', 'NTAG read'),
+            ('mifare_classic_read_block', 'MIFARE Classic read'),
+            ('read_passive_target', 'Passive target read'),
+        ]
+        
+        for method_name, desc in methods_to_try:
+            if hasattr(self.pn532, method_name):
+                try:
+                    method = getattr(self.pn532, method_name)
+                    self.logger.info(f"Pokušavam {desc} ({method_name})")
+                    
+                    if method_name == 'read_passive_target':
+                        # Ova funkcija ne prima page parametar
+                        continue
+                    
+                    result = method(page)
+                    if result:
+                        self.logger.info(f"✓ {desc} uspešan: {[hex(x) for x in result] if hasattr(result, '__iter__') else result}")
+                        
+                        # Pokušaj dekodovanje
+                        if hasattr(result, '__iter__') and len(result) >= 4:
+                            data = result[:4]  # Prva 4 bajta
+                            text = bytes(data).decode("utf-8", errors="ignore").strip('\x00')
+                            self.logger.info(f"  Tekst: '{text}'")
+                            return text
+                    else:
+                        self.logger.info(f"✗ {desc} vratio None")
+                        
+                except Exception as e:
+                    self.logger.info(f"✗ {desc} greška: {e}")
+                    
+        return None
         """Probaj originalne ntag funkcije ako ih imamo"""
         try:
             if hasattr(self.pn532, 'ntag2xx_read_block'):
@@ -372,10 +409,34 @@ if __name__ == "__main__":
             info = reader.get_card_info()
             print(f"Kartica info: {info}")
             
-            # Dump sve stranice za debug
-            reader.dump_all_pages()
+            # Test sa JEDNOM stranicom prvo
+            test_page = 4  # Obično je dostupna za čitanje/pisanje
+            print(f"\n=== TEST STRANICE {test_page} ===")
             
-            # Test upisa
+            # Pokušaj različite metode
+            print("1. Standardni read_block:")
+            data1 = reader.read_block(test_page)
+            print(f"   Rezultat: '{data1}'" if data1 else "   ✗ Neuspešno")
+            
+            print("2. High-level metode:")
+            data2 = reader.try_high_level_read(test_page)  
+            print(f"   Rezultat: '{data2}'" if data2 else "   ✗ Neuspešno")
+            
+            print("3. Debug čitanje:")
+            reader.simple_debug_read(test_page)
+            
+            # Ako bilo koji radi, nastavi sa dump-om
+            if data1 or data2:
+                print("\n✓ Našli smo radnu metodu! Nastavljamo sa dump-om...")
+                reader.dump_all_pages()
+            else:
+                print("\n✗ Nijedna metoda ne radi. Moguće uzroci:")
+                print("   - Kartica nije MIFARE Ultralight")  
+                print("   - Problem sa PN532 komunikacijom")
+                print("   - Kartica nije pravilno detektovana")
+            
+            # Test upisa samo ako čitanje radi
+            if data1 or data2:
             test_write = input("Da li želiš testirati upis na stranicu 4? (y/N): ")
             if test_write.lower() == 'y':
                 test_data = "TEST"
