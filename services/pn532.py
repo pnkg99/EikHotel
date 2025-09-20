@@ -36,47 +36,6 @@ class SimpleUltralightReader:
             self.logger.error(f"Greška pri inicijalizaciji: {e}")
             return False
 
-    def start_polling(self, check_interval: float = 0.5):
-        if not self.pn532:
-            self.logger.error("NFC čitač nije inicijalizovan!")
-            return
-
-        self.is_running = True
-        self.logger.info("Pokrećem polling...")
-
-        last_uid = None
-
-        while self.is_running:
-            try:
-                uid = self.pn532.read_passive_target(timeout=0.1)
-                if uid:
-                    if isinstance(uid, bytearray):
-                        uid = bytes(uid)
-                    uid_hex = ''.join(f"{b:02X}" for b in uid)
-
-                    if last_uid != uid_hex:
-                        self.logger.info(f"Nova kartica: {uid_hex}")
-                        if self.on_card_read:
-                            self.on_card_read(uid)
-                        last_uid = uid_hex
-                else:
-                    if last_uid is not None:
-                        self.logger.info("Kartica uklonjena")
-                        last_uid = None
-
-                time.sleep(check_interval)
-
-            except KeyboardInterrupt:
-                self.logger.info("Prekidam polling (Ctrl+C)")
-                break
-            except Exception as e:
-                self.logger.error(f"Greška tokom polling-a: {e}")
-                time.sleep(1)
-
-    def stop_polling(self):
-        self.is_running = False
-        self.logger.info("Polling zaustavljen")
-
     def read_card_once(self, timeout: float = 1.0):
         try:
             uid = self.pn532.read_passive_target(timeout=timeout)
@@ -405,8 +364,7 @@ if __name__ == "__main__":
         uid = reader.read_card_once(timeout=5.0)
         
         if uid:
-            info = reader.get_card_info()
-            print(f"✓ Kartica info: {info}")
+            info = reader.simple_debug_read()
             
             # Dump sve stranice  
             reader.dump_all_pages()

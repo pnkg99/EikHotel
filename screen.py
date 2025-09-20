@@ -16,6 +16,22 @@ class NFCManager(QObject):
         self.token_block_number = 5
         self.cvc_block_number = 6
 
+    def start_polling(self):
+        """Pokretanje NFC polling-a"""
+        if not self.nfc_thread.isRunning():
+            print("Pokretam NFC polling...")
+            self.nfc_thread.start()
+        else:
+            print("NFC polling je već pokrenut")
+
+    def stop_polling(self):
+        """Zaustavljanje NFC polling-a"""
+        if self.nfc_thread.isRunning():
+            print("Zaustavljam NFC polling...")
+            self.nfc_thread.stop()
+        else:
+            print("NFC polling nije pokrenut")
+
     def read_block(self, block_number):
         """Čita blok sa NFC kartice"""
         try:
@@ -162,10 +178,10 @@ class ScreenManager(QStackedWidget):
     def show_screen(self, name):
         """Prikazuje određeni screen"""
         if name in self.screens:
-            # if name == "home":
-            #     self.nfc_manager.start_polling()
-            # else:
-            #     self.nfc_manager.stop_polling()
+            if name == "home":
+                self.nfc_manager.start_polling()
+            else:
+                self.nfc_manager.stop_polling()
 
             if (self.card_active and 
                 name == "restaurant" and 
