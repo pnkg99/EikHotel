@@ -35,7 +35,6 @@ class NFCManager(QObject):
     def read_block(self, block_number):
         """Čita blok sa NFC kartice"""
         try:
-            self.nfc_reader.simple_debug_read(6)
             return self.nfc_reader.read_block(block_number)
         except Exception as e:
             print(f"Greška pri čitanju bloka {block_number}: {e}")
