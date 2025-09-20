@@ -131,65 +131,47 @@ class SimpleUltralightReader:
             return None
 
     def read_block(self, page: int):
-        """Čita MIFARE Ultralight stranicu direktno preko frame API"""
+        """Čita MIFARE Ultralight stranicu - MORA da aktivira karticu pre čitanja!"""
         try:
             if page < 0 or page > 15:
                 self.logger.error(f"Stranica {page} je van dosega (0-15)")
                 return None
             
-            # MIFARE Ultralight READ komanda = 0x30
-            # Format: [0x40, 0x01, 0x30, PAGE]
-            # 0x40 = InDataExchange, 0x01 = target, 0x30 = READ, PAGE = stranica
-            response = self._send_command_frame(0x40, [0x01, 0x30, page])
+            # KLJUČNO: Ponovo aktiviraj karticu pre čitanja!
+            self.logger.debug(f"Aktiviram karticu za čitanje stranice {page}...")
+            uid = self.pn532.read_passive_target(timeout=1.0)
             
-            if response and len(response) >= 1:
-                self.logger.info(f"Analiziram odgovor za stranicu {page}: {[hex(x) for x in response]}")
+            if not uid:
+                self.logger.error(f"Kartica nije dostupna za čitanje stranice {page}")
+                return None
+            
+            # Sada pokušaj čitanje sa NTAG funkcijom
+            data = self.pn532.ntag2xx_read_block(page)
+            
+            if data:
+                # Uzmi prva 4 bajta (jedna Ultralight stranica)
+                page_data = data[:4]
+                text = bytes(page_data).decode("utf-8", errors="ignore")
                 
-                # Različiti formati odgovora:
-                # Format 1: [STATUS, DATA...]
-                # Format 2: [0xD5, 0x41, STATUS, DATA...]
-                # Format 3: [LENGTH, DATA...]
-                
-                data_start = 0
-                status = None
-                
-                if len(response) >= 3 and response[0] == 0xD5 and response[1] == 0x41:
-                    # Format sa prefiksom 0xD5, 0x41
-                    status = response[2]
-                    data_start = 3
-                    self.logger.info(f"Format sa prefiksom, status: 0x{status:02X}")
-                elif len(response) >= 2 and response[0] in [0x00, 0x01, 0x02]:
-                    # Možda je prvi bajt status
-                    status = response[0] 
-                    data_start = 1
-                    self.logger.info(f"Možda status: 0x{status:02X}")
-                else:
-                    # Možda su podaci odmah na početku
-                    data_start = 0
-                    self.logger.info("Pokušavam direktno čitanje podataka")
-                
-                if status is not None and status != 0x00:
-                    self.logger.error(f"READ neuspešan, status: 0x{status:02X}")
-                    return None
-                
-                # Uzmi podatke
-                if len(response) >= data_start + 4:
-                    data = response[data_start:data_start + 4]
-                    text = bytes(data).decode("utf-8", errors="ignore")
-                    
-                    self.logger.info(f"✓ Stranica {page}: HEX={bytes(data).hex()} TEXT='{text.strip()}'")
-                    return text
-                else:
-                    self.logger.error(f"Nedovoljno podataka u odgovoru (trebam {data_start + 4}, imam {len(response)})")
-                    # Pokušaj sa celim odgovorom
-                    if len(response) >= 4:
-                        data = response[:4]
-                        text = bytes(data).decode("utf-8", errors="ignore")
-                        self.logger.warning(f"⚠ Pokušavam sa početkom: TEXT='{text.strip()}'")
-                        return text
-                    return None
+                self.logger.info(f"✓ Stranica {page}: HEX={bytes(page_data).hex().upper()} TEXT='{text.strip()}'")
+                return text
             else:
-                self.logger.error(f"Prazan ili neispravan odgovor za stranicu {page}")
+                self.logger.warning(f"✗ Stranica {page}: ntag2xx_read_block vratio None")
+                
+                # Fallback: pokušaj sa MIFARE Classic funkcijom
+                try:
+                    # Ponovo aktiviraj karticu
+                    uid = self.pn532.read_passive_target(timeout=0.5)
+                    if uid:
+                        classic_data = self.pn532.mifare_classic_read_block(page)
+                        if classic_data:
+                            page_data = classic_data[:4]
+                            text = bytes(page_data).decode("utf-8", errors="ignore")
+                            self.logger.info(f"✓ Stranica {page} (Classic fallback): TEXT='{text.strip()}'")
+                            return text
+                except:
+                    pass
+                
                 return None
                 
         except Exception as e:
@@ -197,7 +179,7 @@ class SimpleUltralightReader:
             return None
 
     def write_block(self, page: int, data: str):
-        """Upisuje na MIFARE Ultralight stranicu direktno preko frame API"""
+        """Upisuje na MIFARE Ultralight stranicu - mora aktivirati karticu pre upisa!"""
         try:
             if page < 4:
                 self.logger.error(f"Stranica {page} je rezervisana!")
@@ -215,31 +197,51 @@ class SimpleUltralightReader:
             
             self.logger.info(f"Upisujem na stranicu {page}: {write_data} ('{data}')")
             
-            # MIFARE Ultralight WRITE komanda = 0xA2
-            # Format: [0x40, 0x01, 0xA2, PAGE, DATA0, DATA1, DATA2, DATA3]
-            params = [0x01, 0xA2, page] + write_data
-            response = self._send_command_frame(0x40, params)
+            # KLJUČNO: Aktiviraj karticu pre upisa!
+            uid = self.pn532.read_passive_target(timeout=1.0)
             
-            if response and len(response) >= 1:
-                status = response[0]
-                if status == 0x00:  # Success
-                    self.logger.info(f"✓ Stranica {page} uspešno upisana!")
+            if not uid:
+                self.logger.error("Kartica nije dostupna za upis!")
+                return False
+            
+            # Pokušaj upis sa NTAG funkcijom
+            try:
+                success = self.pn532.ntag2xx_write_block(page, write_data)
+                
+                if success:
+                    self.logger.info(f"✓ NTAG upis stranice {page} uspešan!")
                     
                     # Verifikuj upis
-                    time.sleep(0.05)  # Kratka pauza
+                    time.sleep(0.1)  # Kratka pauza
                     verification = self.read_block(page)
                     if verification and verification.strip('\x00').strip() == data:
                         self.logger.info("✓ Upis verifikovan!")
                     else:
-                        self.logger.warning(f"⚠ Verifikacija drugačija: '{verification}'")
+                        self.logger.warning(f"⚠ Verifikacija: '{verification}' vs '{data}'")
                     
                     return True
                 else:
-                    self.logger.error(f"✗ WRITE neuspešan, status: 0x{status:02X}")
-                    return False
-            else:
-                self.logger.error("✗ Neispravan odgovor za WRITE")
-                return False
+                    self.logger.warning("✗ NTAG upis neuspešan, pokušavam Classic fallback...")
+                    
+            except Exception as e:
+                self.logger.warning(f"NTAG upis greška: {e}, pokušavam fallback...")
+            
+            # Fallback: Pokušaj sa MIFARE Classic funkcijom
+            try:
+                # Ponovo aktiviraj karticu
+                uid = self.pn532.read_passive_target(timeout=1.0)
+                if uid:
+                    success = self.pn532.mifare_classic_write_block(page, write_data)
+                    if success:
+                        self.logger.info(f"✓ Classic upis stranice {page} uspešan!")
+                        return True
+                    else:
+                        self.logger.error("✗ Classic upis takođe neuspešan")
+                        
+            except Exception as e:
+                self.logger.error(f"Classic upis greška: {e}")
+            
+            return False
                 
         except Exception as e:
             self.logger.error(f"Greška pri upisu stranice {page}: {e}")
@@ -364,33 +366,29 @@ class SimpleUltralightReader:
             return None
 
     def dump_all_pages(self):
-        """Debug funkcija - čita sve stranice 0-15"""
+        """Čita sve dostupne stranice sa ispravnom aktivacijom kartice"""
         print("\n=== DUMP SVIH STRANICA ===")
+        success_count = 0
+        
         for page in range(16):
             try:
-                print(f"\n--- Stranica {page} ---")
-                
-                # Prvo probaj običan read
                 data = self.read_block(page)
-                if data:
+                if data is not None:
                     clean_text = data.strip('\x00').strip()
-                    print(f"  Obično čitanje: '{clean_text}'")
+                    if clean_text:
+                        print(f"Stranica {page:2d}: '{clean_text}' (neprazna)")
+                    else:
+                        print(f"Stranica {page:2d}: [prazna]")
+                    success_count += 1
                 else:
-                    print(f"  ✗ Obično čitanje neuspešno")
-                
-                # Onda probaj debug read
-                self.simple_debug_read(page)
-                
-                # Onda probaj ntag fallback
-                ntag_data = self.try_ntag_fallback(page)
-                if ntag_data:
-                    print(f"  NTAG fallback: '{ntag_data.strip()}'")
-                
-                time.sleep(0.1)  # Pauza između čitanja
+                    print(f"Stranica {page:2d}: *** NEDOSTUPNA ***")
+                    
+                time.sleep(0.1)  # Kratka pauza između čitanja
                 
             except Exception as e:
-                print(f"  ✗ Exception: {e}")
+                print(f"Stranica {page:2d}: *** GREŠKA: {e} ***")
                 
+        print(f"\n✓ Uspešno pročitano: {success_count}/16 stranica")
         print("=== KRAJ DUMP-a ===\n")
 
 # Primer korišćenja:
@@ -401,57 +399,35 @@ if __name__ == "__main__":
     reader = SimpleUltralightReader(on_card_read=on_card_detected)
     
     try:
+        print("=== ISPRAVLJENA VERZIJA ===")
         print("Priloži MIFARE Ultralight karticu...")
+        
         uid = reader.read_card_once(timeout=5.0)
         
         if uid:
-            # Prikaži info o kartici
             info = reader.get_card_info()
-            print(f"Kartica info: {info}")
+            print(f"✓ Kartica info: {info}")
             
-            # Test sa JEDNOM stranicom prvo
-            test_page = 4  # Obično je dostupna za čitanje/pisanje
-            print(f"\n=== TEST STRANICE {test_page} ===")
+            # Dump sve stranice  
+            reader.dump_all_pages()
             
-            # Pokušaj različite metode
-            print("1. Standardni read_block:")
-            data1 = reader.read_block(test_page)
-            print(f"   Rezultat: '{data1}'" if data1 else "   ✗ Neuspešno")
-            
-            print("2. High-level metode:")
-            data2 = reader.try_high_level_read(test_page)  
-            print(f"   Rezultat: '{data2}'" if data2 else "   ✗ Neuspešno")
-            
-            print("3. Debug čitanje:")
-            reader.simple_debug_read(test_page)
-            
-            # Ako bilo koji radi, nastavi sa dump-om
-            if data1 or data2:
-                print("\n✓ Našli smo radnu metodu! Nastavljamo sa dump-om...")
-                reader.dump_all_pages()
-            else:
-                print("\n✗ Nijedna metoda ne radi. Moguće uzroci:")
-                print("   - Kartica nije MIFARE Ultralight")  
-                print("   - Problem sa PN532 komunikacijom")
-                print("   - Kartica nije pravilno detektovana")
-            
-            # Test upisa samo ako čitanje radi
-            test_write = input("Da li želiš testirati upis na stranicu 4? (y/N): ")
+            # Test upisa
+            test_write = input("Da li želiš testirati upis na stranicu 5? (y/N): ")
             if test_write.lower() == 'y':
                 test_data = "TEST"
-                print(f"\nPokušavam upis: '{test_data}'")
+                print(f"\nPokušavam upis: '{test_data}' na stranicu 5")
                 
-                if reader.write_block(4, test_data):
+                if reader.write_block(5, test_data):
                     print("✓ Upis uspešan!")
+                    
+                    # Čitaj nazad da potvrdiš
+                    read_back = reader.read_block(5)
+                    print(f"✓ Čitanje nazad: '{read_back.strip()}'")
                 else:
                     print("✗ Upis neuspešan")
-                    print("\nMogući uzroci:")
-                    print("  - Kartica nije MIFARE Ultralight")
-                    print("  - Kartica je zaštićena od upisa")
-                    print("  - Kartica se pomerila tokom upisa")
                     
         else:
-            print("Kartica nije detektovana")
+            print("✗ Kartica nije detektovana")
             
     except KeyboardInterrupt:
         print("\nProgram prekinut")
