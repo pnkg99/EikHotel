@@ -105,8 +105,8 @@ class ScreenManager(QStackedWidget):
             print(f"Kartica detektovana: {uid_hex}")
             self.last_uid = uid_hex
             # Čitaj token iz bloka 6
-            self.token = self.nfc_reader.read_block(uid, self.token_block_number)
-            self.cvc = self.nfc_reader.read_block(uid, self.cvc_block_number)
+            self.token = self.nfc_reader.read_block(self.token_block_number)
+            self.cvc = self.nfc_reader.read_block(self.cvc_block_number)
             print(f"Token pročitan: {self.token}")
             print(f"CVC pročitan: {self.token}")
             if self.token and self.cvc:
