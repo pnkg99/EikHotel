@@ -132,8 +132,8 @@ class SecondScreen(DefaultScreen):
         if self.current_keyboard_input:
             self.current_keyboard_input.hide_keyboard()
             
-        randint = str(random.randint(1, 1000000000))
-        randint2 = str(random.randint(1, 1000000000))
+        randint = str(random.randint(1, 9999))
+        randint2 = str(random.randint(1, 9999))
         out = self.parent_window.screen_manager.write_token(randint)#nfc_reader.write_block( 6, randint)
         out2 = self.parent_window.screen_manager.write_cvc(randint2)#nfc_reader.write_block( 7 , randint2)
         if out and out2 :
