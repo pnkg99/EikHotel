@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QStackedWidget
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, QTimer
-from services.pn532 import SimpleNFCReader
+from services.pn532 import SimpleUltralightReader
 from services.web import read_nfc_card, get_card_history, enter_restaurant, enter_gym
 import time
 
@@ -52,7 +52,7 @@ class ScreenManager(QStackedWidget):
         self.screens = {}
         
         # Kreiraj NFC čitač bez callback-a jer ćemo koristiti thread
-        self.nfc_reader = SimpleNFCReader()
+        self.nfc_reader = SimpleUltralightReader()
         
         # Kreiraj polling thread
         self.nfc_thread = NFCPollingThread(self.nfc_reader)
