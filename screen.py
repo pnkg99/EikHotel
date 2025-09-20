@@ -61,8 +61,8 @@ class ScreenManager(QStackedWidget):
         self.token = None
         self.uid = None
         self.cvc = None
-        self.token_block_number = 12
-        self.cvc_block_number = 13
+        self.token_block_number = 6
+        self.cvc_block_number = 7
 
         self.card_active = False  
         self.restaurant_entered = False
