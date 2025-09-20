@@ -13,8 +13,8 @@ class NFCManager(QObject):
         self.nfc_reader = SimpleUltralightReader()
         self.nfc_thread = NFCPollingThread(self.nfc_reader)
         self.nfc_thread.card_detected.connect(self.card_detected.emit)
-        self.token_block_number = 6
-        self.cvc_block_number = 7
+        self.token_block_number = 5
+        self.cvc_block_number = 6
 
     def start_polling(self):
         """Pokretanje NFC polling-a"""
