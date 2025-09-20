@@ -436,7 +436,6 @@ if __name__ == "__main__":
                 print("   - Kartica nije pravilno detektovana")
             
             # Test upisa samo ako čitanje radi
-            if data1 or data2:
             test_write = input("Da li želiš testirati upis na stranicu 4? (y/N): ")
             if test_write.lower() == 'y':
                 test_data = "TEST"
