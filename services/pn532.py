@@ -8,7 +8,7 @@ from adafruit_pn532.i2c import PN532_I2C
 class SimpleUltralightReader:
     """
     Pojednostavljen NFC čitač za Raspberry Pi preko PN532 (I2C)
-    Koristi osnovne _read_frame/_write_frame API funkcije za direktnu kontrolu
+    Koristi osnovne read_frame/write_frame API funkcije za direktnu kontrolu
     """
     def __init__(self, on_card_read: Optional[Callable[[bytes], None]] = None):
         self.on_card_read = on_card_read
@@ -97,18 +97,33 @@ class SimpleUltralightReader:
                 frame.extend(params)
             
             # Pošalji komandu
-            self.logger.debug(f"Šaljem komandu: {[hex(x) for x in frame]}")
+            self.logger.info(f"→ Šaljem: {[hex(x) for x in frame]}")
             self.pn532._write_frame(frame)
             
-            # Čitaj odgovor
-            response = self.pn532._read_frame(length=32)  # Čitaj do 32 bajta
+            # Sačekaj kratko
+            time.sleep(0.01)
             
-            if response:
-                self.logger.debug(f"Odgovor: {[hex(x) for x in response]}")
-                return response
-            else:
-                self.logger.warning("Nema odgovora na komandu")
-                return None
+            # Čitaj odgovor - pokušaj sa različitim length parametrima
+            response = None
+            for length in [32, 64, 16, 8]:
+                try:
+                    response = self.pn532._read_frame(length=length)
+                    if response:
+                        self.logger.info(f"← Odgovor (len={length}): {[hex(x) for x in response]}")
+                        break
+                except:
+                    continue
+            
+            if not response:
+                # Pokušaj bez length parametra
+                try:
+                    response = self.pn532._read_frame()
+                    if response:
+                        self.logger.info(f"← Odgovor (no len): {[hex(x) for x in response]}")
+                except Exception as e:
+                    self.logger.error(f"Greška pri čitanju frame-a: {e}")
+            
+            return response
                 
         except Exception as e:
             self.logger.error(f"Greška pri slanju komande: {e}")
@@ -126,21 +141,54 @@ class SimpleUltralightReader:
             # 0x40 = InDataExchange, 0x01 = target, 0x30 = READ, PAGE = stranica
             response = self._send_command_frame(0x40, [0x01, 0x30, page])
             
-            if response and len(response) >= 2:
-                # Prvi bajt je status, ostatak su podaci
-                status = response[0]
-                if status == 0x00:  # Success
-                    # Ultralight vraća 16 bajta (4 stranice), uzmi prvu stranicu (4 bajta)
-                    data = response[1:5]  # Bajti 1-4
-                    text = bytes(data).decode("utf-8", errors="ignore")
-                    
-                    self.logger.info(f"Stranica {page}: HEX={bytes(data).hex()} TEXT='{text.strip()}'")
-                    return text
+            if response and len(response) >= 1:
+                self.logger.info(f"Analiziram odgovor za stranicu {page}: {[hex(x) for x in response]}")
+                
+                # Različiti formati odgovora:
+                # Format 1: [STATUS, DATA...]
+                # Format 2: [0xD5, 0x41, STATUS, DATA...]
+                # Format 3: [LENGTH, DATA...]
+                
+                data_start = 0
+                status = None
+                
+                if len(response) >= 3 and response[0] == 0xD5 and response[1] == 0x41:
+                    # Format sa prefiksom 0xD5, 0x41
+                    status = response[2]
+                    data_start = 3
+                    self.logger.info(f"Format sa prefiksom, status: 0x{status:02X}")
+                elif len(response) >= 2 and response[0] in [0x00, 0x01, 0x02]:
+                    # Možda je prvi bajt status
+                    status = response[0] 
+                    data_start = 1
+                    self.logger.info(f"Možda status: 0x{status:02X}")
                 else:
+                    # Možda su podaci odmah na početku
+                    data_start = 0
+                    self.logger.info("Pokušavam direktno čitanje podataka")
+                
+                if status is not None and status != 0x00:
                     self.logger.error(f"READ neuspešan, status: 0x{status:02X}")
                     return None
+                
+                # Uzmi podatke
+                if len(response) >= data_start + 4:
+                    data = response[data_start:data_start + 4]
+                    text = bytes(data).decode("utf-8", errors="ignore")
+                    
+                    self.logger.info(f"✓ Stranica {page}: HEX={bytes(data).hex()} TEXT='{text.strip()}'")
+                    return text
+                else:
+                    self.logger.error(f"Nedovoljno podataka u odgovoru (trebam {data_start + 4}, imam {len(response)})")
+                    # Pokušaj sa celim odgovorom
+                    if len(response) >= 4:
+                        data = response[:4]
+                        text = bytes(data).decode("utf-8", errors="ignore")
+                        self.logger.warning(f"⚠ Pokušavam sa početkom: TEXT='{text.strip()}'")
+                        return text
+                    return None
             else:
-                self.logger.error(f"Neispravan odgovor za READ stranicu {page}")
+                self.logger.error(f"Prazan ili neispravan odgovor za stranicu {page}")
                 return None
                 
         except Exception as e:
@@ -196,7 +244,59 @@ class SimpleUltralightReader:
             self.logger.error(f"Greška pri upisu stranice {page}: {e}")
             return False
 
-    def get_card_info(self):
+    def simple_debug_read(self, page: int):
+        """Jednostavan debug za čitanje stranice"""
+        try:
+            self.logger.info(f"\n=== DEBUG READ stranice {page} ===")
+            
+            # Pokušaj sa različitim komandama
+            commands_to_try = [
+                ([0x40, 0x01, 0x30, page], "InDataExchange + READ"),
+                ([0x30, page], "Direktni READ"), 
+                ([0x32, page], "FAST_READ"),
+            ]
+            
+            for cmd, desc in commands_to_try:
+                try:
+                    self.logger.info(f"Pokušavam: {desc}")
+                    self.pn532._write_frame(cmd)
+                    time.sleep(0.02)
+                    
+                    response = self.pn532._read_frame()
+                    if response:
+                        self.logger.info(f"  ✓ Odgovor: {[hex(x) for x in response]}")
+                        if len(response) >= 4:
+                            # Pokušaj dekodovanje
+                            for start in range(min(4, len(response))):
+                                data = response[start:start+4] if start+4 <= len(response) else response[start:]
+                                text = bytes(data).decode("utf-8", errors="ignore").strip('\x00')
+                                if text and text.isprintable():
+                                    self.logger.info(f"    Možda tekst od pozicije {start}: '{text}'")
+                    else:
+                        self.logger.info(f"  ✗ Nema odgovora")
+                        
+                except Exception as e:
+                    self.logger.info(f"  ✗ Greška: {e}")
+                    
+            self.logger.info("=== KRAJ DEBUG ===\n")
+            
+        except Exception as e:
+            self.logger.error(f"Debug greška: {e}")
+
+    def try_ntag_fallback(self, page: int):
+        """Probaj originalne ntag funkcije ako ih imamo"""
+        try:
+            if hasattr(self.pn532, 'ntag2xx_read_block'):
+                self.logger.info(f"Pokušavam ntag2xx_read_block({page})")
+                data = self.pn532.ntag2xx_read_block(page)
+                if data:
+                    self.logger.info(f"NTAG odgovor: {[hex(x) for x in data]}")
+                    text = bytes(data[:4]).decode("utf-8", errors="ignore")
+                    return text
+            return None
+        except Exception as e:
+            self.logger.error(f"NTAG fallback greška: {e}")
+            return None
         """Čita osnovne informacije o kartici"""
         try:
             uid = self.read_card_once()
@@ -231,16 +331,29 @@ class SimpleUltralightReader:
         print("\n=== DUMP SVIH STRANICA ===")
         for page in range(16):
             try:
+                print(f"\n--- Stranica {page} ---")
+                
+                # Prvo probaj običan read
                 data = self.read_block(page)
                 if data:
-                    hex_data = data.encode('utf-8', errors='ignore').hex()
                     clean_text = data.strip('\x00').strip()
-                    print(f"Stranica {page:2d}: HEX={hex_data:8s} TEXT='{clean_text}'")
+                    print(f"  Obično čitanje: '{clean_text}'")
                 else:
-                    print(f"Stranica {page:2d}: *** GREŠKA ***")
+                    print(f"  ✗ Obično čitanje neuspešno")
+                
+                # Onda probaj debug read
+                self.simple_debug_read(page)
+                
+                # Onda probaj ntag fallback
+                ntag_data = self.try_ntag_fallback(page)
+                if ntag_data:
+                    print(f"  NTAG fallback: '{ntag_data.strip()}'")
+                
                 time.sleep(0.1)  # Pauza između čitanja
-            except:
-                print(f"Stranica {page:2d}: *** EXCEPTION ***")
+                
+            except Exception as e:
+                print(f"  ✗ Exception: {e}")
+                
         print("=== KRAJ DUMP-a ===\n")
 
 # Primer korišćenja:
