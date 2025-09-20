@@ -8,7 +8,7 @@ from adafruit_pn532.i2c import PN532_I2C
 class SimpleUltralightReader:
     """
     Pojednostavljen NFC čitač za Raspberry Pi preko PN532 (I2C)
-    Koristi osnovne read_frame/write_frame API funkcije za direktnu kontrolu
+    Koristi osnovne _read_frame/_write_frame API funkcije za direktnu kontrolu
     """
     def __init__(self, on_card_read: Optional[Callable[[bytes], None]] = None):
         self.on_card_read = on_card_read
@@ -89,7 +89,7 @@ class SimpleUltralightReader:
             return None
 
     def _send_command_frame(self, command, params=None):
-        """Šalje komandu korišćenjem write_frame i čita odgovor sa read_frame"""
+        """Šalje komandu korišćenjem _write_frame i čita odgovor sa _read_frame"""
         try:
             # Pripremi frame: [COMMAND] + [PARAMS]
             frame = [command]
@@ -98,10 +98,10 @@ class SimpleUltralightReader:
             
             # Pošalji komandu
             self.logger.debug(f"Šaljem komandu: {[hex(x) for x in frame]}")
-            self.pn532.write_frame(frame)
+            self.pn532._write_frame(frame)
             
             # Čitaj odgovor
-            response = self.pn532.read_frame(length=32)  # Čitaj do 32 bajta
+            response = self.pn532._read_frame(length=32)  # Čitaj do 32 bajta
             
             if response:
                 self.logger.debug(f"Odgovor: {[hex(x) for x in response]}")
