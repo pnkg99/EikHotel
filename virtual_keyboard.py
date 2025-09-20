@@ -211,7 +211,7 @@ class VirtualKeyboard(QWidget):
 
     def mouseReleaseEvent(self, event):
         # Vrati na normalno stanje sa kratkim delay-em
-        #QTimer.singleShot(300, lambda: self.setStyleSheet("background: white;"))
+        QTimer.singleShot(300, lambda: print("hehe"))
         super().mouseReleaseEvent(event)
 
     def add_character(self, char):
