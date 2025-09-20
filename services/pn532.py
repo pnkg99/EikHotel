@@ -1,216 +1,9 @@
 import time
 import logging
-from typing import Optional, Callable
-import board
 import busio
+import board
+from typing import Optional, Callable
 from adafruit_pn532.i2c import PN532_I2C
-from adafruit_pn532.adafruit_pn532 import MIFARE_CMD_AUTH_B, MIFARE_CMD_AUTH_A
-
-class SimpleNFCReader:
-    """
-    Pojednostavljen NFC čitač za Raspberry Pi preko PN532 (I2C)
-    """
-    
-    def __init__(self, on_card_read: Optional[Callable[[bytes], None]] = None):
-        """
-        :param on_card_read: Callback funkcija koja se poziva kada se detektuje kartica
-        """
-        self.on_card_read = on_card_read
-        self.pn532 = None
-        self.is_running = False
-        self.default_key = [0xFF] * 6  # Default MIFARE ključ
-        
-        # Setup logging
-        logging.basicConfig(level=logging.INFO, 
-                          format='%(asctime)s - [NFC] - %(levelname)s - %(message)s')
-        self.logger = logging.getLogger('NFC')
-        
-        # Inicijalizuj čitač
-        self._init_reader()
-    
-    def _init_reader(self) :
-        """Inicijalizuje PN532 čitač"""
-        try:
-            self.logger.info("Inicijalizujem NFC čitač...")
-            i2c = busio.I2C(board.SCL, board.SDA)
-            self.pn532 = PN532_I2C(i2c, debug=False)
-            self.pn532.SAM_configuration()
-            
-            # Proveri firmware
-            ic, ver, rev, support = self.pn532.firmware_version
-            self.logger.info(f"PN532 Firmware: {ver}.{rev}")
-            return True
-            
-        except Exception as e:
-            self.logger.error(f"Greška pri inicijalizaciji: {e}")
-            return False
-    
-    def start_polling(self, check_interval: float = 0.5):
-        """
-        Pokreće kontinuirano čitanje kartica
-        :param check_interval: Interval provere u sekundama
-        """
-        if not self.pn532:
-            self.logger.error("NFC čitač nije inicijalizovan!")
-            return
-        
-        self.is_running = True
-        self.logger.info("Pokretam polling...")
-        
-        last_uid = None
-        
-        while self.is_running:
-            try:
-                uid = self.pn532.read_passive_target(timeout=0.1)
-    # Ako je bytearray, pretvori u bytes
-
-                if uid:
-                    if isinstance(uid, bytearray):
-                        uid = bytes(uid)
-                    uid_hex = ''.join(f"{b:02X}" for b in uid)
-                    
-                    # Pozovi callback samo za nove kartice
-                    if last_uid != uid_hex:
-                        self.logger.info(f"Nova kartica: {uid_hex}")
-                        if self.on_card_read:
-                            self.on_card_read(uid)
-                        last_uid = uid_hex
-                else:
-                    # Resetuj UID ako nema kartice
-                    if last_uid is not None:
-                        self.logger.info("Kartica uklonjena")
-                        last_uid = None
-                
-                time.sleep(check_interval)
-                
-            except KeyboardInterrupt:
-                self.logger.info("Prekidam polling (Ctrl+C)")
-                break
-            except Exception as e:
-                self.logger.error(f"Greška tokom polling-a: {e}")
-                time.sleep(1)  # Kratka pauza pre ponovnog pokušaja
-    
-    def stop_polling(self):
-        """Zaustavlja polling"""
-        self.is_running = False
-        self.logger.info("Polling zaustavljen")
-    
-    def read_card_once(self, timeout: float = 1.0) :
-        """
-        Čita karticu jednom
-        :param timeout: Timeout u sekundama
-        :return: UID kartice ili None
-        """
-        if not self.pn532:
-            self.logger.error("NFC čitač nije inicijalizovan!")
-            return None
-        
-        try:
-            uid = self.pn532.read_passive_target(timeout=timeout)
-            if uid:
-                uid_hex = ''.join(f"{b:02X}" for b in uid)
-                self.logger.info(f"Kartica detektovana: {uid_hex}")
-            return uid
-        except Exception as e:
-            self.logger.error(f"Greška pri čitanju: {e}")
-            return None
-    
-    def authenticate_block(self, uid: bytes, block: int) :
-        try:
-            return self.pn532.mifare_classic_authenticate_block(
-                uid, block, MIFARE_CMD_AUTH_B, self.default_key
-            )
-        except Exception as e:
-            self.logger.error(f"Greška pri autentifikaciji bloka {block}: {e}")
-            return False
-    
-    def read_block(self, uid: bytes, block: int, key: bytes = b"\xFF\xFF\xFF\xFF\xFF\xFF"):
-        try:
-            uid_list = [b for b in uid]  # PN532 traži listu intova
-
-            # Autentifikacija
-            if not self.authenticate_block(uid, block):# self.pn532.mifare_classic_authenticate_block(uid_list, block, MIFARE_CMD_AUTH_A, key):
-                self.logger.error(f"Autentifikacija neuspešna za blok {block} (key={key.hex()})")
-                return None
-
-            # Čitaj podatke
-            data = self.pn532.mifare_classic_read_block(block)
-            if not data:
-                self.logger.error(f"Čitanje bloka {block} neuspešno")
-                return None
-
-            # Konverzija u string
-            text = bytes(data).rstrip(b"\x00").decode("utf-8", errors="ignore")
-            self.logger.info(f"Blok {block} pročitan: '{text}'")
-            return text
-
-        except Exception as e:
-            self.logger.error(f"Greška pri čitanju bloka {block}: {e}")
-            return None
-
-    def write_block(self, uid: bytes, block: int, data: str):
-        try:          
-            # Pripremi podatke (16 bajtova sa padding)
-            block_data = list(data.encode('utf-8'))[:16]
-            block_data += [0x00] * (16 - len(block_data))
-            
-            # Upiši podatke
-            self.pn532.mifare_classic_write_block(block, block_data)
-            self.logger.info(f"Blok {block} upisan: '{data}'")
-            return True
-            
-        except Exception as e:
-            self.logger.error(f"Greška pri upisu u blok {block}: {e}")
-            return False
-    
-    def read_write_demo(self, block: int = 6):
-        """
-        Demo funkcija koja čeka karticu i demonstrira čitanje/pisanje
-        :param block: Blok za testiranje (default 6)
-        """
-        print(f"\nDemo čitanje/pisanje bloka {block}")
-        print("Postavite karticu na čitač...")
-        
-        while True:
-            try:
-                uid = self.read_card_once(timeout=0.5)
-                if uid:
-                    uid_hex = ''.join(f"{b:02X}" for b in uid)
-                    print(f"\nKartica detektovana: {uid_hex}")
-                    
-                    # Čitaj postojeće podatke
-                    existing_data = self.read_block(uid, block)
-                    print(f"Postojeći podaci: '{existing_data}'")
-                    
-                    # Upiši nove podatke
-                    new_data = f"Test-{int(time.time())}"
-                    if self.write_block(uid, block, new_data):
-                        print(f"Upisano: '{new_data}'")
-                        
-                        # Verifikuj upis
-                        verified_data = self.read_block(uid, block)
-                        print(f"Verifikacija: '{verified_data}'")
-                        
-                        if verified_data == new_data:
-                            print("✓ Upis uspešan!")
-                        else:
-                            print("✗ Greška pri verifikaciji")
-                    
-                    print("\nUklonite karticu i postavite drugu za novi test...")
-                    
-                    # Čekaj da se kartica ukloni
-                    while self.read_card_once(timeout=0.1):
-                        time.sleep(0.1)
-                    
-                    print("Kartica uklonjena. Postavite sledeću...")
-                
-            except KeyboardInterrupt:
-                print("\nDemo završen!")
-                break
-            except Exception as e:
-                self.logger.error(f"Greška tokom demo: {e}")
-                time.sleep(1)
-
 
 class SimpleUltralightReader:
     """
@@ -229,7 +22,7 @@ class SimpleUltralightReader:
         # Inicijalizuj čitač
         self._init_reader()
 
-    def _init_reader(self) :
+    def _init_reader(self):
         try:
             self.logger.info("Inicijalizujem NFC čitač (Ultralight)...")
             i2c = busio.I2C(board.SCL, board.SDA)
@@ -284,7 +77,7 @@ class SimpleUltralightReader:
         self.is_running = False
         self.logger.info("Polling zaustavljen")
 
-    def read_card_once(self, timeout: float = 1.0) :
+    def read_card_once(self, timeout: float = 1.0):
         try:
             uid = self.pn532.read_passive_target(timeout=timeout)
             if uid:
@@ -295,19 +88,38 @@ class SimpleUltralightReader:
             self.logger.error(f"Greška pri čitanju: {e}")
             return None
 
-    def read_block(self, page: int) :
+    def read_block(self, page: int):
         """Čita jednu Ultralight stranicu (4 bajta)"""
         try:
-            data = self.pn532.mifare_ultralight_read_page(page)
+            # MIFARE Ultralight = NTAG kompatibilan
+            data = self.pn532.ntag2xx_read_block(page)
+            
             if not data:
                 self.logger.error(f"Čitanje stranice {page} neuspešno")
                 return None
 
-            text = bytes(data).decode("utf-8", errors="ignore")
-            self.logger.info(f"Stranica {page} pročitana: HEX={bytes(data).hex()} TEXT='{text}'")
+            # NTAG vraća 16 bajta (4 stranice), uzmi samo prvi blok (4 bajta)
+            page_data = data[:4]
+            text = bytes(page_data).decode("utf-8", errors="ignore")
+            self.logger.info(f"Stranica {page} pročitana: HEX={bytes(page_data).hex()} TEXT='{text}'")
             return text
         except Exception as e:
             self.logger.error(f"Greška pri čitanju stranice {page}: {e}")
+            return None
+
+    def _read_ultralight_page_raw(self, page: int):
+        """Raw čitanje stranice koristeći low-level PN532 komande"""
+        try:
+            # MIFARE Ultralight READ komanda (0x30)
+            response = self.pn532.call_function(
+                0x40,  # InDataExchange
+                params=[0x01, 0x30, page]  # Tg=1, CMD=READ, Page
+            )
+            if response and len(response) > 1:
+                return response[1:]  # Prvi bajt je status
+            return None
+        except Exception as e:
+            self.logger.error(f"Raw čitanje neuspešno: {e}")
             return None
 
     def write_block(self, page: int, data: str):
@@ -315,23 +127,100 @@ class SimpleUltralightReader:
         try:
             raw = list(data.encode("utf-8"))[:4]
             raw += [0x00] * (4 - len(raw))
-            self.pn532.mifare_ultralight_write_page(page, raw)
-            self.logger.info(f"Stranica {page} upisana: '{data}'")
-            return True
+            
+            # Koristi NTAG funkciju za Ultralight
+            success = self.pn532.ntag2xx_write_block(page, raw)
+            
+            if success:
+                self.logger.info(f"Stranica {page} upisana: '{data}'")
+                return True
+            else:
+                self.logger.error(f"Upis stranice {page} neuspešan")
+                return False
         except Exception as e:
             self.logger.error(f"Greška pri upisu stranice {page}: {e}")
             return False
 
+    def _write_ultralight_page_raw(self, page: int, data: list):
+        """Raw upis stranice koristeći low-level PN532 komande"""
+        try:
+            # MIFARE Ultralight WRITE komanda (0xA2)
+            params = [0x01, 0xA2, page] + data[:4]
+            response = self.pn532.call_function(0x40, params=params)
+            return response is not None
+        except Exception as e:
+            self.logger.error(f"Raw upis neuspešan: {e}")
+            return False
+
+    def get_card_info(self):
+        """Čita osnovne informacije o kartici"""
+        try:
+            uid = self.read_card_once()
+            if not uid:
+                return None
+                
+            info = {
+                'uid': ''.join(f"{b:02X}" for b in uid),
+                'uid_length': len(uid),
+                'card_type': 'MIFARE Ultralight' if len(uid) == 7 else 'Unknown'
+            }
+            
+            # Pokušaj čitati prve stranice za dodatne info
+            try:
+                page0 = self.pn532.ntag2xx_read_block(0)  # UID + BCC
+                page1 = self.pn532.ntag2xx_read_block(1)  # Još UID + internal
+                
+                if page0 and len(page0) >= 4:
+                    info['serial_number'] = bytes(page0[:4]).hex()
+                    
+                self.logger.info(f"Kartica info: {info}")
+                return info
+            except:
+                self.logger.warning("Ne mogu čitati dodatne informacije o kartici")
+                return info
+                
+        except Exception as e:
+            self.logger.error(f"Greška pri čitanju info kartice: {e}")
+            return None
+
+# Primer korišćenja:
 if __name__ == "__main__":
-    def card_detected(uid):
-        uid_hex = ''.join(f"{b:02X}" for b in uid)
-        print(f"Callback: Kartica {uid_hex} detektovana!")
-
-    reader = SimpleUltralightReader(on_card_read=card_detected)
-
+    def on_card_detected(uid):
+        print(f"Detektovana kartica sa UID: {uid.hex()}")
+    
+    reader = SimpleUltralightReader(on_card_read=on_card_detected)
+    
     try:
-        reader.read_write_demo()
+        # Test čitanja
+        print("Priloži MIFARE Ultralight karticu...")
+        uid = reader.read_card_once(timeout=5.0)
+        
+        if uid:
+            # Prikaži info o kartici
+            info = reader.get_card_info()
+            print(f"Kartica info: {info}")
+            
+            # Pokušaj čitanje korisničkih stranica (4-15)
+            print("\nČitam korisničke stranice:")
+            for page in range(4, 8):  # Stranice 4-7
+                data = reader.read_block(page)
+                if data:
+                    print(f"  Stranica {page}: '{data.strip()}'")
+            
+            # Test upisa (pazi - ovo će prepisati podatke!)
+            test_write = input("\nDa li želiš testirati upis na stranicu 4? (y/N): ")
+            if test_write.lower() == 'y':
+                test_data = "TEST"
+                if reader.write_block(4, test_data):
+                    print(f"Uspešno upisano: '{test_data}'")
+                    # Verifikuj upis
+                    read_back = reader.read_block(4)
+                    print(f"Verifikacija: '{read_back.strip()}'")
+                    
+        else:
+            print("Kartica nije detektovana")
+            
     except KeyboardInterrupt:
-        print("Program završen!")
+        print("\nProgram prekinut")
     finally:
         reader.stop_polling()
