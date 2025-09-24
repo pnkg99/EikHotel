@@ -67,8 +67,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # Sakrivanje kursora
-    transparent_cursor = QCursor(QPixmap(10, 10)) 
-    app.setOverrideCursor(transparent_cursor)
+    app.setOverrideCursor(Qt.BlankCursor)
 
     # Pokretanje prozoras
     window = MainWindow()
