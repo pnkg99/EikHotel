@@ -1,0 +1,9 @@
+Section "ServerFlags"
+    Option "Cursor" "off"
+EndSection
+
+Section "InputClass"
+    Identifier "No cursor"
+    MatchIsPointer "true"
+    Option "Cursor" "off"
+EndSection
